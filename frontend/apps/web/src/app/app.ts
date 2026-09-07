@@ -4,9 +4,6 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   imports: [RouterOutlet],
   selector: 'inv-root',
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
+  template: '<router-outlet></router-outlet>',
 })
-export class App {
-  protected readonly title = 'Inventario';
-}
+export class App {}

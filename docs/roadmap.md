@@ -6,7 +6,7 @@ Alcance detallado y fuera de alcance: ver [PRD.md](PRD.md).
 | Hito | Entrega | Estado |
 |---|---|---|
 | **0 — Fundaciones** | Andamiaje: repo, Nx (`frontend/`: apps `web` y `mobile` + 6 libs), solución .NET 10 (`backend/`), docker-compose, pipelines CI, tooling, docs. Todo compila y las pruebas pasan; sin funcionalidad de negocio. La app `mobile` es Angular puro; Ionic + Capacitor se añaden en el Hito 7. | Hecho |
-| **1 — Identidad y multi-tenant** | Autenticación JWT, usuarios, roles, permiso por sucursal, alta de partners, `TenantId` + global query filter operativos. Entidad `Sucursal` con CRUD end-to-end en web. Primera migración de EF Core. | Pendiente |
+| **1 — Identidad y multi-tenant** | Autenticación JWT, usuarios, roles, permiso por sucursal, alta de partners, `TenantId` + global query filter operativos. Entidad `Sucursal` con CRUD end-to-end en web. Primera migración de EF Core. | Código listo; falta aplicar la migración (SQL/Docker) y probar el flujo completo |
 | **2 — Catálogo** | Categorías jerárquicas, artículos, códigos alternos, foto (Blob / local en dev), importación masiva Excel/CSV. | Pendiente |
 | **3 — Ubicaciones y existencias** | Ubicaciones por sucursal; existencia por artículo/sucursal/ubicación; mínimos, máximos y punto de reorden; costeo promedio ponderado; valorización; alerta de bajo mínimo. | Pendiente |
 | **4 — Movimientos** | Entrada, salida (incl. salida por venta), ajuste, merma. Kardex por artículo. | Pendiente |

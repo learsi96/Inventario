@@ -1,0 +1,53 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  background: #1f2937;
+  color: #f9fafb;
+
+  .marca {
+    font-weight: 700;
+  }
+
+  nav a {
+    color: #d1d5db;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+
+    &.activo {
+      background: #374151;
+      color: #fff;
+    }
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .usuario {
+    font-size: 0.85rem;
+    color: #9ca3af;
+  }
+
+  button {
+    background: transparent;
+    border: 1px solid #4b5563;
+    color: #f9fafb;
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+
+main {
+  flex: 1;
+  padding: 1.5rem;
+}

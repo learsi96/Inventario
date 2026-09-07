@@ -1,6 +1,5 @@
 // Modelos y contratos de dominio compartidos entre la web y la app móvil.
-// Se poblará a partir del Hito 1: Tenant, Sucursal, Articulo, Existencia,
-// Movimiento, Conteo, etc. Sin dependencias de framework (solo tipos y lógica pura).
+// Sin dependencias de framework (solo tipos y lógica pura).
 
 /** Resultado paginado estándar que devuelven los listados de la API. */
 export interface PagedResult<T> {
@@ -12,3 +11,35 @@ export interface PagedResult<T> {
 
 /** Identificador de un partner (tenant). */
 export type TenantId = string;
+
+/** Roles del sistema dentro de un partner. */
+export type RolUsuario =
+  'Administrador' | 'EncargadoAlmacen' | 'Vendedor' | 'Consulta';
+
+/** Datos del usuario autenticado (respuesta de /api/auth/me). */
+export interface UsuarioActual {
+  readonly id: string;
+  readonly email: string;
+  readonly nombreCompleto: string;
+  readonly rol: RolUsuario;
+  readonly tenantId: TenantId;
+  readonly sucursalIds: readonly string[];
+}
+
+/** Sucursal de un partner. */
+export interface Sucursal {
+  readonly id: string;
+  readonly nombre: string;
+  readonly codigo: string;
+  readonly direccion: string | null;
+  readonly activa: boolean;
+  readonly creadoEn: string;
+}
+
+export interface CrearSucursal {
+  readonly nombre: string;
+  readonly codigo: string;
+  readonly direccion?: string | null;
+}
+
+export type ActualizarSucursal = CrearSucursal;

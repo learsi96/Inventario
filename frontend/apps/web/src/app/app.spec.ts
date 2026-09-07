@@ -1,18 +1,17 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { App } from './app';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App, RouterModule.forRoot([])],
+      imports: [App],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
-  it('muestra el título', async () => {
+  it('se crea', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Inventario');
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });
