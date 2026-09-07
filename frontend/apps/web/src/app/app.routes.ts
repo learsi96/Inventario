@@ -12,7 +12,7 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('./shell/shell').then((m) => m.Shell),
     canActivate: [authGuard],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'sucursales' },
+      { path: '', pathMatch: 'full', redirectTo: 'articulos' },
       {
         path: 'sucursales',
         loadComponent: () =>
@@ -26,6 +26,11 @@ export const appRoutes: Route[] = [
           import('./paginas/categorias/categorias').then(
             (m) => m.CategoriasPage,
           ),
+      },
+      {
+        path: 'articulos',
+        loadComponent: () =>
+          import('./paginas/articulos/articulos').then((m) => m.ArticulosPage),
       },
     ],
   },

@@ -64,6 +64,10 @@ builder.Services.AddCors(options => options.AddPolicy(CorsClientesWeb, policy =>
     }
 }));
 
+builder.Services.ConfigureHttpJsonOptions(options =>
+    options.SerializerOptions.Converters.Add(
+        new System.Text.Json.Serialization.JsonStringEnumConverter()));
+
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<ManejadorExcepciones>();
 
@@ -94,6 +98,7 @@ app.MapAuthEndpoints();
 app.MapSucursalesEndpoints();
 app.MapPartnersEndpoints();
 app.MapCatalogoEndpoints();
+app.MapArticulosEndpoints();
 
 if (app.Environment.IsDevelopment())
 {

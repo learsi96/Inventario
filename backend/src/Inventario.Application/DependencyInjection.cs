@@ -17,6 +17,7 @@ public static class DependencyInjection
         services.AddScoped<PartnersService>();
         services.AddScoped<CategoriasService>();
         services.AddScoped<UnidadesMedidaService>();
+        services.AddScoped<ArticulosService>();
         return services;
     }
 }

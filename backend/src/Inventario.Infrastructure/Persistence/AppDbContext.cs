@@ -32,6 +32,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, ICurrentUser c
 
     public DbSet<UnidadMedida> UnidadesMedida => Set<UnidadMedida>();
 
+    public DbSet<Articulo> Articulos => Set<Articulo>();
+
+    public DbSet<CodigoAlterno> CodigosAlternos => Set<CodigoAlterno>();
+
     /// <summary>Tenant en contexto. Lo lee el filtro global de consultas en cada query.</summary>
     public Guid? TenantIdActual => currentUser.TenantId;
 

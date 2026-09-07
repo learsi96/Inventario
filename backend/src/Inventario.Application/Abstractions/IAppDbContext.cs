@@ -25,5 +25,9 @@ public interface IAppDbContext
 
     DbSet<UnidadMedida> UnidadesMedida { get; }
 
+    DbSet<Articulo> Articulos { get; }
+
+    DbSet<CodigoAlterno> CodigosAlternos { get; }
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
