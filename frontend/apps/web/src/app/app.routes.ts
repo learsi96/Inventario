@@ -51,6 +51,13 @@ export const appRoutes: Route[] = [
             (m) => m.UbicacionesPage,
           ),
       },
+      {
+        path: 'movimientos',
+        loadComponent: () =>
+          import('./paginas/movimientos/movimientos').then(
+            (m) => m.MovimientosPage,
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

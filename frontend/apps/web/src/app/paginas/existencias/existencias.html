@@ -256,6 +256,44 @@
       </ul>
     </div>
     }
+    <div class="kardex-detalle">
+      <div class="kardex-encabezado">
+        <h3>Kardex</h3>
+        <button type="button" class="btn" (click)="verKardex()">
+          {{ kardex() === null ? 'Ver movimientos' : 'Recargar' }}
+        </button>
+      </div>
+      @if (kardex(); as k) { @if (k.length === 0) {
+      <p class="vacio">Sin movimientos registrados.</p>
+      } @else {
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Folio</th>
+            <th>Tipo</th>
+            <th>Motivo</th>
+            <th class="num">Cantidad</th>
+            <th class="num">Existencia</th>
+            <th class="num">Costo prom.</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of k; track r.movimientoId) {
+          <tr>
+            <td>#{{ r.folio }}</td>
+            <td>{{ r.tipo }}</td>
+            <td>{{ r.motivo ?? '—' }}</td>
+            <td class="num">{{ r.cantidad | number: '1.0-2' }}</td>
+            <td class="num">{{ r.cantidadResultante | number: '1.0-2' }}</td>
+            <td class="num">
+              {{ r.costoPromedioResultante | number: '1.2-2' }}
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+      } }
+    </div>
   </div>
   }
 </section>
