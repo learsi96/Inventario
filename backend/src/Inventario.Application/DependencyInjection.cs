@@ -13,6 +13,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddScoped<AutenticacionService>();
+        services.AddScoped<UsuariosService>();
         services.AddScoped<SucursalesService>();
         services.AddScoped<PartnersService>();
         services.AddScoped<CategoriasService>();

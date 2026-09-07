@@ -5,6 +5,9 @@
       <a routerLink="/articulos" routerLinkActive="activo">Artículos</a>
       <a routerLink="/categorias" routerLinkActive="activo">Categorías</a>
       <a routerLink="/sucursales" routerLinkActive="activo">Sucursales</a>
+      @if (esAdmin()) {
+      <a routerLink="/usuarios" routerLinkActive="activo">Usuarios</a>
+      }
     </nav>
     <span class="spacer"></span>
     @if (usuario(); as u) {

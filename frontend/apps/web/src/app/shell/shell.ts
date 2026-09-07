@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import {
   Router,
   RouterLink,
@@ -18,6 +18,9 @@ export class Shell {
   private readonly router = inject(Router);
 
   protected readonly usuario = this.auth.usuario;
+  protected readonly esAdmin = computed(
+    () => this.auth.usuario()?.rol === 'Administrador',
+  );
 
   protected salir(): void {
     this.auth.logout();
