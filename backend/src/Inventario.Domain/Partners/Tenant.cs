@@ -23,4 +23,7 @@ public class Tenant : EntidadBase
 
     /// <summary>Folio del que se deriva el siguiente SKU autogenerado (ART-000001…).</summary>
     public int FolioArticulos { get; set; }
+
+    /// <summary>Folio consecutivo de movimientos de inventario.</summary>
+    public int FolioMovimientos { get; set; }
 }

@@ -1,0 +1,85 @@
+<section class="ubicaciones">
+  <div class="encabezado">
+    <h1>Ubicaciones</h1>
+    <div class="controles">
+      <select
+        [value]="sucursalId()"
+        (change)="cambiarSucursal($any($event.target).value)"
+      >
+        @for (s of sucursales(); track s.id) {
+        <option [value]="s.id">{{ s.nombre }}</option>
+        }
+      </select>
+      <label class="filtro">
+        <input
+          type="checkbox"
+          [checked]="incluirInactivas()"
+          (change)="alternarInactivas()"
+        />
+        Incluir inactivas
+      </label>
+    </div>
+  </div>
+
+  @if (error(); as e) {
+  <p class="error">{{ e }}</p>
+  } @if (esAdmin()) {
+  <form class="formulario" [formGroup]="form" (ngSubmit)="guardar()">
+    <h2>{{ editandoId() ? 'Editar ubicación' : 'Nueva ubicación' }}</h2>
+    <div class="campos">
+      <label>
+        Código
+        <input type="text" formControlName="codigo" placeholder="P1-A3-N2" />
+      </label>
+      <label>
+        Descripción
+        <input type="text" formControlName="descripcion" />
+      </label>
+      @if (editandoId()) {
+      <label class="check">
+        <input type="checkbox" formControlName="activa" /> Activa
+      </label>
+      }
+    </div>
+    <div class="acciones">
+      <button type="submit" class="primario" [disabled]="form.invalid">
+        Guardar
+      </button>
+      @if (editandoId()) {
+      <button type="button" (click)="cancelar()">Cancelar</button>
+      }
+    </div>
+  </form>
+  } @if (cargando()) {
+  <p>Cargando…</p>
+  } @else if (ubicaciones().length === 0) {
+  <p class="vacio">Esta sucursal no tiene ubicaciones.</p>
+  } @else {
+  <table>
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        @if (esAdmin()) {
+        <th></th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (u of ubicaciones(); track u.id) {
+      <tr [class.inactiva]="!u.activa">
+        <td>{{ u.codigo }}</td>
+        <td>{{ u.descripcion ?? '—' }}</td>
+        <td>{{ u.activa ? 'Activa' : 'Inactiva' }}</td>
+        @if (esAdmin()) {
+        <td>
+          <button type="button" (click)="editar(u)">Editar</button>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+</section>

@@ -100,6 +100,7 @@ app.MapSucursalesEndpoints();
 app.MapPartnersEndpoints();
 app.MapCatalogoEndpoints();
 app.MapArticulosEndpoints();
+app.MapExistenciasEndpoints();
 
 if (app.Environment.IsDevelopment())
 {

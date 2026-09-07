@@ -1,5 +1,7 @@
 using Inventario.Domain.Catalogo;
+using Inventario.Domain.Existencias;
 using Inventario.Domain.Identidad;
+using Inventario.Domain.Movimientos;
 using Inventario.Domain.Partners;
 using Inventario.Domain.Sucursales;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +30,16 @@ public interface IAppDbContext
     DbSet<Articulo> Articulos { get; }
 
     DbSet<CodigoAlterno> CodigosAlternos { get; }
+
+    DbSet<Ubicacion> Ubicaciones { get; }
+
+    DbSet<Existencia> Existencias { get; }
+
+    DbSet<ExistenciaUbicacion> ExistenciasUbicacion { get; }
+
+    DbSet<Movimiento> Movimientos { get; }
+
+    DbSet<MovimientoRenglon> MovimientoRenglones { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

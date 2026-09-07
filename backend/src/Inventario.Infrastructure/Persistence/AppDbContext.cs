@@ -2,7 +2,9 @@ using System.Linq.Expressions;
 using Inventario.Application.Abstractions;
 using Inventario.Domain.Catalogo;
 using Inventario.Domain.Common;
+using Inventario.Domain.Existencias;
 using Inventario.Domain.Identidad;
+using Inventario.Domain.Movimientos;
 using Inventario.Domain.Partners;
 using Inventario.Domain.Sucursales;
 using Inventario.Domain.Tenancy;
@@ -35,6 +37,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, ICurrentUser c
     public DbSet<Articulo> Articulos => Set<Articulo>();
 
     public DbSet<CodigoAlterno> CodigosAlternos => Set<CodigoAlterno>();
+
+    public DbSet<Ubicacion> Ubicaciones => Set<Ubicacion>();
+
+    public DbSet<Existencia> Existencias => Set<Existencia>();
+
+    public DbSet<ExistenciaUbicacion> ExistenciasUbicacion => Set<ExistenciaUbicacion>();
+
+    public DbSet<Movimiento> Movimientos => Set<Movimiento>();
+
+    public DbSet<MovimientoRenglon> MovimientoRenglones => Set<MovimientoRenglon>();
 
     /// <summary>Tenant en contexto. Lo lee el filtro global de consultas en cada query.</summary>
     public Guid? TenantIdActual => currentUser.TenantId;

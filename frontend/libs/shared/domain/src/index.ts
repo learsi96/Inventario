@@ -172,6 +172,79 @@ export interface FiltroArticulos {
   readonly tamano?: number;
 }
 
+// ---- Existencias (Hito 3) ----
+
+export interface Ubicacion {
+  readonly id: string;
+  readonly sucursalId: string;
+  readonly codigo: string;
+  readonly descripcion: string | null;
+  readonly activa: boolean;
+}
+
+export interface CrearUbicacion {
+  readonly sucursalId: string;
+  readonly codigo: string;
+  readonly descripcion?: string | null;
+}
+
+export interface ActualizarUbicacion {
+  readonly codigo: string;
+  readonly descripcion?: string | null;
+  readonly activa: boolean;
+}
+
+export interface ExistenciaLista {
+  readonly articuloId: string;
+  readonly sku: string;
+  readonly articuloNombre: string;
+  readonly sucursalId: string;
+  readonly sucursalNombre: string;
+  readonly cantidad: number;
+  readonly unidadCodigo: string;
+  readonly costoPromedio: number;
+  readonly valor: number;
+  readonly minimo: number;
+  readonly bajoMinimo: boolean;
+}
+
+export interface ExistenciaUbicacion {
+  readonly ubicacionId: string;
+  readonly ubicacionCodigo: string;
+  readonly cantidad: number;
+}
+
+export interface Existencia {
+  readonly articuloId: string;
+  readonly sku: string;
+  readonly articuloNombre: string;
+  readonly sucursalId: string;
+  readonly sucursalNombre: string;
+  readonly cantidad: number;
+  readonly costoPromedio: number;
+  readonly valor: number;
+  readonly minimo: number;
+  readonly maximo: number;
+  readonly puntoReorden: number;
+  readonly bajoMinimo: boolean;
+  readonly porUbicacion: readonly ExistenciaUbicacion[];
+}
+
+export interface ValorizacionSucursal {
+  readonly sucursalId: string;
+  readonly sucursalNombre: string;
+  readonly articulos: number;
+  readonly unidades: number;
+  readonly valor: number;
+}
+
+export interface Valorizacion {
+  readonly valorTotal: number;
+  readonly unidadesTotal: number;
+  readonly articulosConExistencia: number;
+  readonly porSucursal: readonly ValorizacionSucursal[];
+}
+
 export interface ResultadoPaginado<T> {
   readonly items: readonly T[];
   readonly total: number;

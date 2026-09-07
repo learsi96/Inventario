@@ -74,9 +74,3 @@ public sealed record FiltroArticulos(
     EstadoArticulo? Estado,
     int Pagina = 1,
     int Tamano = 20);
-
-public sealed record ResultadoPaginado<T>(
-    IReadOnlyList<T> Items,
-    int Total,
-    int Pagina,
-    int Tamano);

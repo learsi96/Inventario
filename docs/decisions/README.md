@@ -12,3 +12,4 @@ anterior como *Reemplazada por 00NN*.
 | [0003](0003-acceso-a-datos.md) | Acceso a datos (EF Core + Dapper) | Aceptada |
 | [0004](0004-estructura-monorepo.md) | Estructura de repositorio (monorepo) | Aceptada |
 | [0005](0005-infraestructura-como-codigo.md) | Infraestructura como código (Bicep) | Aceptada |
+| [0006](0006-modelo-de-existencias.md) | Modelo de existencias (grano Artículo×Sucursal) | Aceptada |

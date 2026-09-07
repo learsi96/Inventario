@@ -37,6 +37,20 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
           import('./paginas/usuarios/usuarios').then((m) => m.UsuariosPage),
       },
+      {
+        path: 'existencias',
+        loadComponent: () =>
+          import('./paginas/existencias/existencias').then(
+            (m) => m.ExistenciasPage,
+          ),
+      },
+      {
+        path: 'ubicaciones',
+        loadComponent: () =>
+          import('./paginas/ubicaciones/ubicaciones').then(
+            (m) => m.UbicacionesPage,
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

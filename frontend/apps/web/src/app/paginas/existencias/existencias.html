@@ -1,0 +1,261 @@
+<section class="existencias">
+  <div class="encabezado">
+    <h1>Existencias</h1>
+    <div class="controles">
+      <select
+        [value]="sucursalId()"
+        (change)="cambiarSucursal($any($event.target).value)"
+      >
+        @for (s of sucursales(); track s.id) {
+        <option [value]="s.id">{{ s.nombre }}</option>
+        }
+      </select>
+      @if (esOperador()) {
+      <button type="button" class="btn primario" (click)="abrirNuevoAjuste()">
+        Registrar / ajustar
+      </button>
+      }
+    </div>
+  </div>
+
+  @if (valorizacion(); as v) {
+  <div class="tarjetas">
+    <div class="tarjeta">
+      <span class="valor">{{ v.valorTotal | number: '1.2-2' }}</span>
+      <span class="rotulo">Valor total del inventario</span>
+    </div>
+    <div class="tarjeta">
+      <span class="valor">{{ v.unidadesTotal | number: '1.0-2' }}</span>
+      <span class="rotulo">Unidades</span>
+    </div>
+    <div class="tarjeta">
+      <span class="valor">{{ v.articulosConExistencia }}</span>
+      <span class="rotulo">Artículos con existencia</span>
+    </div>
+  </div>
+  } @if (error(); as e) {
+  <p class="error">{{ e }}</p>
+  } @if (mostrarNuevoAjuste()) {
+  <form
+    class="panel nuevo-ajuste"
+    [formGroup]="nuevoAjusteForm"
+    (ngSubmit)="guardarNuevoAjuste()"
+  >
+    <h2>Registrar o ajustar existencia</h2>
+    <label class="campo">
+      Artículo
+      <input
+        type="text"
+        formControlName="busqueda"
+        placeholder="Busca por SKU o nombre…"
+        (input)="buscarArticulo()"
+      />
+    </label>
+    @if (resultadosBusqueda().length > 0) {
+    <ul class="resultados">
+      @for (a of resultadosBusqueda(); track a.id) {
+      <li>
+        <button type="button" (click)="elegirArticulo(a)">
+          {{ a.sku }} — {{ a.nombre }}
+        </button>
+      </li>
+      }
+    </ul>
+    }
+    <div class="campos-grid">
+      <label class="campo">
+        Cantidad
+        <input type="number" step="0.01" formControlName="cantidad" />
+      </label>
+      <label class="campo">
+        Costo promedio
+        <input type="number" step="0.01" formControlName="costoPromedio" />
+      </label>
+      <label class="campo">
+        Motivo
+        <input type="text" formControlName="motivo" />
+      </label>
+    </div>
+    <div class="acciones">
+      <button
+        type="submit"
+        class="btn primario"
+        [disabled]="!articuloSeleccionado() || nuevoAjusteForm.invalid"
+      >
+        Guardar
+      </button>
+      <button type="button" class="btn" (click)="mostrarNuevoAjuste.set(false)">
+        Cancelar
+      </button>
+    </div>
+  </form>
+  }
+
+  <div class="filtros">
+    <input
+      type="search"
+      placeholder="Buscar artículo…"
+      [value]="filtroTexto()"
+      (input)="filtroTexto.set($any($event.target).value)"
+      (keyup.enter)="filtrar()"
+    />
+    <select
+      [value]="filtroCategoria()"
+      (change)="filtroCategoria.set($any($event.target).value); filtrar()"
+    >
+      <option value="">Todas las categorías</option>
+      @for (c of categorias(); track c.id) {
+      <option [value]="c.id">{{ c.etiqueta }}</option>
+      }
+    </select>
+    <label class="filtro">
+      <input
+        type="checkbox"
+        [checked]="soloBajoMinimo()"
+        (change)="soloBajoMinimo.set($any($event.target).checked); filtrar()"
+      />
+      Solo bajo mínimo
+    </label>
+  </div>
+
+  @if (cargando()) {
+  <p>Cargando…</p>
+  } @else if (resultado().items.length === 0) {
+  <p class="vacio">Sin existencias que coincidan.</p>
+  } @else {
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Artículo</th>
+        <th class="num">Cantidad</th>
+        <th class="num">Costo prom.</th>
+        <th class="num">Valor</th>
+        <th class="num">Mínimo</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (e of resultado().items; track e.articuloId) {
+      <tr [class.bajo]="e.bajoMinimo">
+        <td>{{ e.sku }}</td>
+        <td>{{ e.articuloNombre }}</td>
+        <td class="num">
+          {{ e.cantidad | number: '1.0-2' }} {{ e.unidadCodigo }} @if
+          (e.bajoMinimo) {
+          <span class="badge">bajo mínimo</span>
+          }
+        </td>
+        <td class="num">{{ e.costoPromedio | number: '1.2-2' }}</td>
+        <td class="num">{{ e.valor | number: '1.2-2' }}</td>
+        <td class="num">{{ e.minimo | number: '1.0-2' }}</td>
+        <td>
+          <button type="button" class="btn" (click)="abrirDetalle(e)">
+            Detalle
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="paginacion">
+    <button
+      type="button"
+      class="btn"
+      [disabled]="pagina() <= 1"
+      (click)="irAPagina(pagina() - 1)"
+    >
+      ‹
+    </button>
+    <span>Página {{ pagina() }} de {{ totalPaginas() }}</span>
+    <button
+      type="button"
+      class="btn"
+      [disabled]="pagina() >= totalPaginas()"
+      (click)="irAPagina(pagina() + 1)"
+    >
+      ›
+    </button>
+  </div>
+  } @if (detalle(); as d) {
+  <div class="panel detalle">
+    <div class="detalle-encabezado">
+      <h2>{{ d.sku }} — {{ d.articuloNombre }}</h2>
+      <button type="button" class="btn" (click)="cerrarDetalle()">
+        Cerrar
+      </button>
+    </div>
+    <p class="resumen">
+      {{ d.cantidad | number: '1.0-2' }} unidades · costo prom. {{
+      d.costoPromedio | number: '1.2-2' }} · valor {{ d.valor | number: '1.2-2'
+      }} @if (d.bajoMinimo) {
+      <span class="badge">bajo mínimo</span>
+      }
+    </p>
+
+    @if (esOperador()) {
+    <form
+      class="mini-form"
+      [formGroup]="ajusteForm"
+      (ngSubmit)="guardarAjuste()"
+    >
+      <h3>Ajustar existencia</h3>
+      <div class="campos-grid">
+        <label class="campo">
+          Cantidad
+          <input type="number" step="0.01" formControlName="cantidad" />
+        </label>
+        <label class="campo">
+          Costo promedio
+          <input type="number" step="0.01" formControlName="costoPromedio" />
+        </label>
+        <label class="campo">
+          Motivo
+          <input type="text" formControlName="motivo" />
+        </label>
+      </div>
+      <button
+        type="submit"
+        class="btn primario"
+        [disabled]="ajusteForm.invalid"
+      >
+        Aplicar ajuste
+      </button>
+    </form>
+    } @if (esAdmin()) {
+    <form
+      class="mini-form"
+      [formGroup]="parametrosForm"
+      (ngSubmit)="guardarParametros()"
+    >
+      <h3>Parámetros de reorden</h3>
+      <div class="campos-grid">
+        <label class="campo">
+          Mínimo
+          <input type="number" step="0.01" formControlName="minimo" />
+        </label>
+        <label class="campo">
+          Máximo
+          <input type="number" step="0.01" formControlName="maximo" />
+        </label>
+        <label class="campo">
+          Punto de reorden
+          <input type="number" step="0.01" formControlName="puntoReorden" />
+        </label>
+      </div>
+      <button type="submit" class="btn primario">Guardar parámetros</button>
+    </form>
+    } @if (d.porUbicacion.length > 0) {
+    <div class="ubicaciones-detalle">
+      <h3>Por ubicación</h3>
+      <ul>
+        @for (u of d.porUbicacion; track u.ubicacionId) {
+        <li>{{ u.ubicacionCodigo }}: {{ u.cantidad | number: '1.0-2' }}</li>
+        }
+      </ul>
+    </div>
+    }
+  </div>
+  }
+</section>
