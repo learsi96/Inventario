@@ -101,7 +101,19 @@ public sealed class ArticulosServiceTests : IDisposable
     private ArticulosService NuevoServicio()
     {
         var db = Crear();
-        return new ArticulosService(db, new CurrentUserFake(_tenant), new CategoriasService(db));
+        return new ArticulosService(
+            db, new CurrentUserFake(_tenant), new CategoriasService(db), new AlmacenNulo());
+    }
+
+    private sealed class AlmacenNulo : IAlmacenArchivos
+    {
+        public Task<string> GuardarAsync(Stream contenido, string extension, CancellationToken ct) =>
+            Task.FromResult($"fake{extension}");
+
+        public Task<ArchivoAlmacenado?> ObtenerAsync(string nombre, CancellationToken ct) =>
+            Task.FromResult<ArchivoAlmacenado?>(null);
+
+        public Task EliminarAsync(string nombre, CancellationToken ct) => Task.CompletedTask;
     }
 
     private AppDbContext Crear() => new(_opciones, new CurrentUserFake(_tenant));

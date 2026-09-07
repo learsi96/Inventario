@@ -41,6 +41,10 @@ infra/.env
 *.env.local
 appsettings.*.local.json
 
+# ---- Almacén de archivos local (dev) ----
+archivos-dev/
+**/archivos-dev/
+
 # ---- IDE / OS ----
 .vs/
 .idea/

@@ -1,4 +1,5 @@
 using Inventario.Application.Abstractions;
+using Inventario.Infrastructure.Archivos;
 using Inventario.Infrastructure.Identidad;
 using Inventario.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,9 @@ public static class DependencyInjection
         services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<AppDbContext>());
 
         services.AddSingleton<IPasswordHasher, PasswordHasherAdapter>();
+
+        services.AddOptions<ArchivosOptions>().Bind(configuration.GetSection(ArchivosOptions.Seccion));
+        services.AddSingleton<IAlmacenArchivos, AlmacenArchivosLocal>();
 
         services.AddOptions<JwtOptions>()
             .Bind(configuration.GetSection(JwtOptions.Seccion))

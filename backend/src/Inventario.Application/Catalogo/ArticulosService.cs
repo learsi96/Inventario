@@ -8,7 +8,8 @@ namespace Inventario.Application.Catalogo;
 public sealed class ArticulosService(
     IAppDbContext db,
     ICurrentUser currentUser,
-    CategoriasService categorias)
+    CategoriasService categorias,
+    IAlmacenArchivos almacen)
 {
     private const int TamanoMaximo = 100;
 
@@ -162,6 +163,51 @@ public sealed class ArticulosService(
         articulo.Estado = estado;
         await db.SaveChangesAsync(ct);
         return await ObtenerAsync(articulo.Id, ct);
+    }
+
+    public async Task<ArticuloDto> SubirImagenAsync(
+        Guid id, Stream contenido, string extension, CancellationToken ct)
+    {
+        var articulo = await db.Articulos.FirstOrDefaultAsync(a => a.Id == id, ct)
+            ?? throw new NoEncontradoException("Artículo no encontrado.");
+
+        var anterior = articulo.ImagenNombre;
+        articulo.ImagenNombre = await almacen.GuardarAsync(contenido, extension, ct);
+        await db.SaveChangesAsync(ct);
+
+        if (anterior is not null)
+        {
+            await almacen.EliminarAsync(anterior, ct);
+        }
+
+        return await ObtenerAsync(id, ct);
+    }
+
+    public async Task<ArticuloDto> EliminarImagenAsync(Guid id, CancellationToken ct)
+    {
+        var articulo = await db.Articulos.FirstOrDefaultAsync(a => a.Id == id, ct)
+            ?? throw new NoEncontradoException("Artículo no encontrado.");
+
+        var nombre = articulo.ImagenNombre;
+        articulo.ImagenNombre = null;
+        await db.SaveChangesAsync(ct);
+
+        if (nombre is not null)
+        {
+            await almacen.EliminarAsync(nombre, ct);
+        }
+
+        return await ObtenerAsync(id, ct);
+    }
+
+    public async Task<ArchivoAlmacenado?> ObtenerImagenAsync(Guid id, CancellationToken ct)
+    {
+        var nombre = await db.Articulos
+            .Where(a => a.Id == id)
+            .Select(a => a.ImagenNombre)
+            .FirstOrDefaultAsync(ct);
+
+        return nombre is null ? null : await almacen.ObtenerAsync(nombre, ct);
     }
 
     private static void Validar(string nombre, decimal costo, decimal precio, decimal? iva)

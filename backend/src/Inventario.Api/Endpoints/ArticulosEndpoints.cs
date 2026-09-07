@@ -6,6 +6,9 @@ namespace Inventario.Api.Endpoints;
 
 public static class ArticulosEndpoints
 {
+    private static readonly string[] ExtensionesImagen = [".jpg", ".jpeg", ".png", ".webp"];
+    private const long TamanoMaximoImagen = 5 * 1024 * 1024;
+
     public static IEndpointRouteBuilder MapArticulosEndpoints(this IEndpointRouteBuilder app)
     {
         var grupo = app.MapGroup("/api/articulos")
@@ -51,6 +54,46 @@ public static class ArticulosEndpoints
             Results.Ok(await servicio.CambiarEstadoAsync(id, request.Estado, ct)))
             .RequireAuthorization(Politicas.AdminPartner)
             .WithSummary("Cambia el estado (Activo/Descontinuado) de un artículo.");
+
+        grupo.MapGet("/{id:guid}/imagen", async (
+            Guid id, ArticulosService servicio, CancellationToken ct) =>
+        {
+            var imagen = await servicio.ObtenerImagenAsync(id, ct);
+            return imagen is null
+                ? Results.NotFound()
+                : Results.Stream(imagen.Contenido, imagen.ContentType);
+        })
+        .WithSummary("Devuelve la imagen del artículo.");
+
+        grupo.MapPost("/{id:guid}/imagen", async (
+            Guid id, IFormFile archivo, ArticulosService servicio, CancellationToken ct) =>
+        {
+            var extension = Path.GetExtension(archivo.FileName).ToLowerInvariant();
+            if (!ExtensionesImagen.Contains(extension))
+            {
+                return Results.Problem(
+                    statusCode: StatusCodes.Status400BadRequest,
+                    title: "Formato no permitido. Usa JPG, PNG o WEBP.");
+            }
+            if (archivo.Length is 0 or > TamanoMaximoImagen)
+            {
+                return Results.Problem(
+                    statusCode: StatusCodes.Status400BadRequest,
+                    title: "La imagen debe pesar entre 1 byte y 5 MB.");
+            }
+
+            await using var contenido = archivo.OpenReadStream();
+            return Results.Ok(await servicio.SubirImagenAsync(id, contenido, extension, ct));
+        })
+        .RequireAuthorization(Politicas.AdminPartner)
+        .DisableAntiforgery()
+        .WithSummary("Sube o reemplaza la imagen del artículo (solo Administrador).");
+
+        grupo.MapDelete("/{id:guid}/imagen", async (
+            Guid id, ArticulosService servicio, CancellationToken ct) =>
+            Results.Ok(await servicio.EliminarImagenAsync(id, ct)))
+            .RequireAuthorization(Politicas.AdminPartner)
+            .WithSummary("Elimina la imagen del artículo (solo Administrador).");
 
         return app;
     }

@@ -46,4 +46,19 @@ export class ArticulosService {
   cambiarEstado(id: string, estado: EstadoArticulo): Observable<Articulo> {
     return this.http.patch<Articulo>(`${this.url}/${id}/estado`, { estado });
   }
+
+  subirImagen(id: string, archivo: File): Observable<Articulo> {
+    const cuerpo = new FormData();
+    cuerpo.append('archivo', archivo);
+    return this.http.post<Articulo>(`${this.url}/${id}/imagen`, cuerpo);
+  }
+
+  eliminarImagen(id: string): Observable<Articulo> {
+    return this.http.delete<Articulo>(`${this.url}/${id}/imagen`);
+  }
+
+  /** Descarga la imagen como blob (con el token del interceptor) para mostrarla. */
+  obtenerImagen(id: string): Observable<Blob> {
+    return this.http.get(`${this.url}/${id}/imagen`, { responseType: 'blob' });
+  }
 }

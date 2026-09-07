@@ -60,6 +60,8 @@ export class ArticulosPage implements OnInit {
   protected readonly unidades = signal<UnidadMedida[]>([]);
   protected readonly editandoId = signal<string | null>(null);
   protected readonly mostrarForm = signal(false);
+  protected readonly imagenUrl = signal<string | null>(null);
+  protected readonly subiendoImagen = signal(false);
 
   protected readonly filtroTexto = signal('');
   protected readonly filtroCategoria = signal('');
@@ -138,6 +140,7 @@ export class ArticulosPage implements OnInit {
 
   protected nuevo(): void {
     this.editandoId.set(null);
+    this.limpiarImagen();
     this.codigosAlternos.clear();
     this.form.reset({
       sku: '',
@@ -156,9 +159,13 @@ export class ArticulosPage implements OnInit {
   }
 
   protected editar(articulo: ArticuloLista): void {
+    this.limpiarImagen();
     this.api.obtener(articulo.id).subscribe({
       next: (a) => {
         this.editandoId.set(a.id);
+        if (a.tieneImagen) {
+          this.cargarImagen(a.id);
+        }
         this.codigosAlternos.clear();
         for (const c of a.codigosAlternos) {
           this.codigosAlternos.push(this.grupoCodigo(c.codigo, c.tipo));
@@ -193,6 +200,56 @@ export class ArticulosPage implements OnInit {
   protected cancelar(): void {
     this.mostrarForm.set(false);
     this.editandoId.set(null);
+    this.limpiarImagen();
+  }
+
+  protected subirImagen(evento: Event): void {
+    const input = evento.target as HTMLInputElement;
+    const archivo = input.files?.[0];
+    const id = this.editandoId();
+    if (!archivo || !id) {
+      return;
+    }
+    this.subiendoImagen.set(true);
+    this.api.subirImagen(id, archivo).subscribe({
+      next: () => {
+        this.subiendoImagen.set(false);
+        input.value = '';
+        this.cargarImagen(id);
+      },
+      error: (r: { error?: { title?: string } }) => {
+        this.subiendoImagen.set(false);
+        this.error.set(r.error?.title ?? 'No se pudo subir la imagen.');
+      },
+    });
+  }
+
+  protected eliminarImagen(): void {
+    const id = this.editandoId();
+    if (!id) {
+      return;
+    }
+    this.api.eliminarImagen(id).subscribe({
+      next: () => this.limpiarImagen(),
+      error: () => this.error.set('No se pudo eliminar la imagen.'),
+    });
+  }
+
+  private cargarImagen(id: string): void {
+    this.api.obtenerImagen(id).subscribe({
+      next: (blob) => {
+        this.limpiarImagen();
+        this.imagenUrl.set(URL.createObjectURL(blob));
+      },
+    });
+  }
+
+  private limpiarImagen(): void {
+    const actual = this.imagenUrl();
+    if (actual) {
+      URL.revokeObjectURL(actual);
+    }
+    this.imagenUrl.set(null);
   }
 
   protected guardar(): void {

@@ -75,6 +75,27 @@
       </label>
     </div>
 
+    <fieldset class="imagen">
+      <legend>Imagen</legend>
+      @if (editandoId()) { @if (imagenUrl(); as url) {
+      <img [src]="url" alt="Imagen del artículo" />
+      <button type="button" (click)="eliminarImagen()">Quitar imagen</button>
+      }
+      <label class="archivo">
+        {{ imagenUrl() ? 'Reemplazar' : 'Subir' }} imagen (JPG/PNG/WEBP, máx 5
+        MB)
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          [disabled]="subiendoImagen()"
+          (change)="subirImagen($event)"
+        />
+      </label>
+      } @else {
+      <p class="pista">Guarda el artículo para poder añadirle una imagen.</p>
+      }
+    </fieldset>
+
     <fieldset class="alternos">
       <legend>Códigos alternos</legend>
       @for (grupo of codigosAlternos.controls; track $index) {
