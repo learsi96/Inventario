@@ -43,3 +43,30 @@ export interface CrearSucursal {
 }
 
 export type ActualizarSucursal = CrearSucursal;
+
+// ---- Catálogo ----
+
+/** Nodo del árbol de categorías. */
+export interface CategoriaNodo {
+  readonly id: string;
+  readonly nombre: string;
+  readonly categoriaPadreId: string | null;
+  readonly esSistema: boolean;
+  readonly activa: boolean;
+  readonly subcategorias: readonly CategoriaNodo[];
+}
+
+export interface CrearCategoria {
+  readonly nombre: string;
+  readonly categoriaPadreId: string | null;
+}
+
+export type ActualizarCategoria = CrearCategoria;
+
+/** Unidad de medida (catálogo global). */
+export interface UnidadMedida {
+  readonly id: string;
+  readonly codigo: string;
+  readonly nombre: string;
+  readonly activa: boolean;
+}

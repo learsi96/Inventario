@@ -1,4 +1,6 @@
 using Inventario.Application.Abstractions;
+using Inventario.Application.Catalogo;
+using Inventario.Domain.Catalogo;
 using Inventario.Domain.Identidad;
 using Inventario.Domain.Partners;
 using Inventario.Domain.Sucursales;
@@ -37,6 +39,14 @@ public static class SeedData
 
         var tenant = new Tenant { Nombre = "Refaccionaria Demo", Codigo = DemoTenantCodigo };
         db.Tenants.Add(tenant);
+
+        db.Categorias.Add(new Categoria
+        {
+            TenantId = tenant.Id,
+            Nombre = CategoriasService.NombreCategoriaSistema,
+            EsSistema = true,
+            Activa = true,
+        });
 
         var matriz = new Sucursal
         {

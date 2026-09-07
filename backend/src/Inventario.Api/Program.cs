@@ -93,6 +93,7 @@ app.MapGet("/health", () => Results.Ok(new HealthResponse("ok", "Inventario.Api"
 app.MapAuthEndpoints();
 app.MapSucursalesEndpoints();
 app.MapPartnersEndpoints();
+app.MapCatalogoEndpoints();
 
 if (app.Environment.IsDevelopment())
 {

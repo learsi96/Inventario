@@ -1,5 +1,7 @@
 using Inventario.Application.Abstractions;
+using Inventario.Application.Catalogo;
 using Inventario.Application.Common;
+using Inventario.Domain.Catalogo;
 using Inventario.Domain.Identidad;
 using Inventario.Domain.Partners;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +43,14 @@ public sealed class PartnersService(IAppDbContext db, IPasswordHasher passwordHa
 
         var tenant = new Tenant { Nombre = request.Nombre.Trim(), Codigo = codigo };
         db.Tenants.Add(tenant);
+
+        db.Categorias.Add(new Categoria
+        {
+            TenantId = tenant.Id,
+            Nombre = CategoriasService.NombreCategoriaSistema,
+            EsSistema = true,
+            Activa = true,
+        });
 
         var admin = new Usuario
         {

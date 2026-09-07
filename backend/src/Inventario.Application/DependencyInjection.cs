@@ -1,3 +1,4 @@
+using Inventario.Application.Catalogo;
 using Inventario.Application.Identidad;
 using Inventario.Application.Partners;
 using Inventario.Application.Sucursales;
@@ -14,6 +15,8 @@ public static class DependencyInjection
         services.AddScoped<AutenticacionService>();
         services.AddScoped<SucursalesService>();
         services.AddScoped<PartnersService>();
+        services.AddScoped<CategoriasService>();
+        services.AddScoped<UnidadesMedidaService>();
         return services;
     }
 }

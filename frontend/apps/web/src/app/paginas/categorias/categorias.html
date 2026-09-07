@@ -1,0 +1,83 @@
+<section class="categorias">
+  <div class="encabezado">
+    <h1>Categorías</h1>
+    <label class="filtro">
+      <input
+        type="checkbox"
+        [checked]="incluirInactivas()"
+        (change)="alternarInactivas()"
+      />
+      Incluir inactivas
+    </label>
+  </div>
+
+  @if (error(); as e) {
+  <p class="error">{{ e }}</p>
+  } @if (esAdmin()) {
+  <form class="formulario" [formGroup]="form" (ngSubmit)="guardar()">
+    <h2>{{ editandoId() ? 'Editar categoría' : 'Nueva categoría' }}</h2>
+    <div class="campos">
+      <label>
+        Nombre
+        <input type="text" formControlName="nombre" />
+      </label>
+      <label>
+        Categoría padre
+        <select formControlName="categoriaPadreId">
+          <option value="">(raíz)</option>
+          @for (f of filas(); track f.nodo.id) { @if (f.nodo.id !==
+          editandoId()) {
+          <option [value]="f.nodo.id">
+            {{ '— '.repeat(f.nivel) }}{{ f.nodo.nombre }}
+          </option>
+          } }
+        </select>
+      </label>
+    </div>
+    <div class="acciones">
+      <button type="submit" [disabled]="form.invalid">Guardar</button>
+      <button type="button" (click)="nuevaRaiz()">Nueva raíz</button>
+      @if (editandoId()) {
+      <button type="button" (click)="cancelar()">Cancelar</button>
+      }
+    </div>
+  </form>
+  } @if (cargando()) {
+  <p>Cargando…</p>
+  } @else {
+  <table>
+    <thead>
+      <tr>
+        <th>Categoría</th>
+        <th>Estado</th>
+        @if (esAdmin()) {
+        <th></th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (f of filas(); track f.nodo.id) {
+      <tr [class.inactiva]="!f.nodo.activa">
+        <td [style.paddingLeft.px]="12 + f.nivel * 20">
+          {{ f.nodo.nombre }} @if (f.nodo.esSistema) {
+          <span class="etiqueta">sistema</span>
+          }
+        </td>
+        <td>{{ f.nodo.activa ? 'Activa' : 'Inactiva' }}</td>
+        @if (esAdmin()) {
+        <td class="fila-acciones">
+          <button type="button" (click)="nuevaHija(f.nodo)">+ Sub</button>
+          <button type="button" (click)="editar(f.nodo)">Editar</button>
+          @if (!f.nodo.esSistema) {
+          <button type="button" (click)="alternarActivacion(f.nodo)">
+            {{ f.nodo.activa ? 'Desactivar' : 'Activar' }}
+          </button>
+          }
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+</section>

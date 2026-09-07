@@ -20,6 +20,13 @@ export const appRoutes: Route[] = [
             (m) => m.SucursalesPage,
           ),
       },
+      {
+        path: 'categorias',
+        loadComponent: () =>
+          import('./paginas/categorias/categorias').then(
+            (m) => m.CategoriasPage,
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: '' },
