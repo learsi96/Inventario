@@ -29,6 +29,9 @@ dotnet_diagnostic.CA1062.severity = warning
 dotnet_diagnostic.CA2007.severity = none
 # Nombres de dominio y de pruebas en español, con guiones bajos en los tests
 dotnet_diagnostic.CA1707.severity = none
+# LoggerMessage delegates: solo valen la pena en rutas calientes; no en app code normal
+dotnet_diagnostic.CA1848.severity = none
+dotnet_diagnostic.CA1873.severity = none
 
 [**/tests/**/*.cs]
 dotnet_diagnostic.CA1707.severity = none

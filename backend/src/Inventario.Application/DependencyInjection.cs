@@ -1,3 +1,6 @@
+using Inventario.Application.Identidad;
+using Inventario.Application.Partners;
+using Inventario.Application.Sucursales;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Inventario.Application;
@@ -5,12 +8,12 @@ namespace Inventario.Application;
 /// <summary>Registro en el contenedor de DI de la capa de aplicación.</summary>
 public static class DependencyInjection
 {
-    /// <summary>
-    /// Registra los servicios de la capa de aplicación (casos de uso, validadores,
-    /// comportamientos). Se poblará a partir del Hito 1.
-    /// </summary>
+    /// <summary>Registra los casos de uso de la capa de aplicación.</summary>
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
+        services.AddScoped<AutenticacionService>();
+        services.AddScoped<SucursalesService>();
+        services.AddScoped<PartnersService>();
         return services;
     }
 }
