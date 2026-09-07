@@ -58,14 +58,17 @@ semanas sin volver a su método anterior.
 - Bitácora de auditoría (quién, qué, cuándo).
 
 ### 4.3 Catálogo de artículos
-- SKU interno, código de barras, nombre, descripción, marca, unidad de medida.
+- SKU interno (autogenerado, editable), código de barras (opcional, único),
+  nombre, descripción, marca, unidad de medida (catálogo).
 - Número de parte OEM y códigos alternos.
-- Categorías / familias jerárquicas.
-- Foto del artículo.
-- Costo y un precio de venta.
-- Impuesto por artículo.
+- Categorías / familias jerárquicas. La categoría es **obligatoria**; cada partner
+  tiene una categoría "Otros" de sistema (no borrable) que recibe los artículos
+  sin categoría asignada.
+- Foto del artículo (una; almacenamiento abstracto, local en dev / Blob en la nube).
+- Costo de referencia y un precio de venta.
+- IVA por artículo (porcentaje).
 - Estado activo / descontinuado.
-- Importación masiva desde Excel/CSV.
+- *(La importación masiva desde Excel/CSV pasa a MVP2.)*
 
 ### 4.4 Sucursales y ubicaciones
 - Sucursales del partner.
@@ -132,6 +135,7 @@ semanas sin volver a su método anterior.
 ## 5. Fuera de alcance del MVP1
 
 ### MVP2
+- **Importación masiva de catálogo** desde Excel/CSV.
 - **Compras**: proveedores completos, órdenes de compra, recepción de OC.
 - **Ventas**: nota de venta / ticket.
 - Modo **offline** en la app móvil (cache local, cola de sincronización, conflictos).
