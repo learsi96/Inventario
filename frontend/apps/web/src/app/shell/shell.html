@@ -1,0 +1,17 @@
+<div class="layout">
+  <header>
+    <span class="marca">Inventario</span>
+    <nav>
+      <a routerLink="/sucursales" routerLinkActive="activo">Sucursales</a>
+    </nav>
+    <span class="spacer"></span>
+    @if (usuario(); as u) {
+    <span class="usuario">{{ u.nombreCompleto }} · {{ u.rol }}</span>
+    }
+    <button type="button" (click)="salir()">Salir</button>
+  </header>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>

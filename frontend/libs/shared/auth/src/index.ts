@@ -1,4 +1,3 @@
-// Autenticación y contexto de tenant en el cliente: login, almacenamiento del
-// token, guard de rutas, interceptor y resolución del partner activo.
-// Se implementa en el Hito 1.
-export {};
+export { AuthService } from './lib/auth.service';
+export { authInterceptor } from './lib/auth.interceptor';
+export { authGuard } from './lib/auth.guard';

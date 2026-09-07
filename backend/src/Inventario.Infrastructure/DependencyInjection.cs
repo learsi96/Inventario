@@ -1,3 +1,5 @@
+using Inventario.Application.Abstractions;
+using Inventario.Infrastructure.Identidad;
 using Inventario.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,8 +11,9 @@ namespace Inventario.Infrastructure;
 public static class DependencyInjection
 {
     /// <summary>
-    /// Registra el acceso a datos (EF Core + SQL Server) y los servicios de
-    /// infraestructura. La cadena de conexión se lee de <c>ConnectionStrings:Default</c>.
+    /// Registra el acceso a datos (EF Core + SQL Server), el hash de contraseñas y
+    /// la emisión de tokens. La cadena de conexión se lee de
+    /// <c>ConnectionStrings:Default</c> y las opciones de JWT de la sección <c>Jwt</c>.
     /// </summary>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
@@ -24,6 +27,16 @@ public static class DependencyInjection
             options.UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(AppDbContext).Assembly.GetName().Name)));
+
+        services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<AppDbContext>());
+
+        services.AddSingleton<IPasswordHasher, PasswordHasherAdapter>();
+
+        services.AddOptions<JwtOptions>()
+            .Bind(configuration.GetSection(JwtOptions.Seccion))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
         return services;
     }

@@ -1,0 +1,30 @@
+<div class="login">
+  <form [formGroup]="form" (ngSubmit)="enviar()">
+    <h1>Inventario</h1>
+    <p class="subtitulo">Inicia sesión</p>
+
+    <label>
+      Email
+      <input type="email" formControlName="email" autocomplete="username" />
+    </label>
+
+    <label>
+      Contraseña
+      <input
+        type="password"
+        formControlName="contrasena"
+        autocomplete="current-password"
+      />
+    </label>
+
+    @if (error(); as e) {
+    <p class="error">{{ e }}</p>
+    }
+
+    <button type="submit" [disabled]="form.invalid || cargando()">
+      {{ cargando() ? 'Entrando…' : 'Entrar' }}
+    </button>
+
+    <p class="pista">Demo: admin&#64;demo.com / Demo1234!</p>
+  </form>
+</div>
