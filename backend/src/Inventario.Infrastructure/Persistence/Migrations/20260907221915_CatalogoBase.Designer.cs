@@ -4,6 +4,7 @@ using Inventario.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventario.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260907221915_CatalogoBase")]
+    partial class CatalogoBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,92 +24,6 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Inventario.Domain.Catalogo.Articulo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset?>("ActualizadoEn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid>("CategoriaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CodigoBarras")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<decimal>("Costo")
-                        .HasPrecision(18, 4)
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<DateTimeOffset>("CreadoEn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Descripcion")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("ImagenNombre")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<decimal>("IvaPorcentaje")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
-
-                    b.Property<string>("Marca")
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("NumeroParteOem")
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                    b.Property<decimal>("PrecioVenta")
-                        .HasPrecision(18, 4)
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<string>("Sku")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UnidadMedidaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoriaId");
-
-                    b.HasIndex("UnidadMedidaId");
-
-                    b.HasIndex("TenantId", "CategoriaId");
-
-                    b.HasIndex("TenantId", "CodigoBarras")
-                        .IsUnique()
-                        .HasFilter("[CodigoBarras] IS NOT NULL");
-
-                    b.HasIndex("TenantId", "Sku")
-                        .IsUnique();
-
-                    b.ToTable("Articulos", (string)null);
-                });
 
             modelBuilder.Entity("Inventario.Domain.Catalogo.Categoria", b =>
                 {
@@ -144,43 +61,6 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                     b.HasIndex("TenantId", "CategoriaPadreId");
 
                     b.ToTable("Categorias", (string)null);
-                });
-
-            modelBuilder.Entity("Inventario.Domain.Catalogo.CodigoAlterno", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset?>("ActualizadoEn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid>("ArticuloId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                    b.Property<DateTimeOffset>("CreadoEn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticuloId");
-
-                    b.HasIndex("TenantId", "Codigo");
-
-                    b.ToTable("CodigosAlternos", (string)null);
                 });
 
             modelBuilder.Entity("Inventario.Domain.Catalogo.UnidadMedida", b =>
@@ -304,9 +184,6 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                     b.Property<DateTimeOffset>("CreadoEn")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("FolioArticulos")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("IvaPorcentaje")
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
@@ -374,25 +251,6 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                     b.ToTable("Sucursales", (string)null);
                 });
 
-            modelBuilder.Entity("Inventario.Domain.Catalogo.Articulo", b =>
-                {
-                    b.HasOne("Inventario.Domain.Catalogo.Categoria", "Categoria")
-                        .WithMany()
-                        .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Inventario.Domain.Catalogo.UnidadMedida", "UnidadMedida")
-                        .WithMany()
-                        .HasForeignKey("UnidadMedidaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Categoria");
-
-                    b.Navigation("UnidadMedida");
-                });
-
             modelBuilder.Entity("Inventario.Domain.Catalogo.Categoria", b =>
                 {
                     b.HasOne("Inventario.Domain.Catalogo.Categoria", "CategoriaPadre")
@@ -401,17 +259,6 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CategoriaPadre");
-                });
-
-            modelBuilder.Entity("Inventario.Domain.Catalogo.CodigoAlterno", b =>
-                {
-                    b.HasOne("Inventario.Domain.Catalogo.Articulo", "Articulo")
-                        .WithMany("CodigosAlternos")
-                        .HasForeignKey("ArticuloId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Articulo");
                 });
 
             modelBuilder.Entity("Inventario.Domain.Identidad.UsuarioSucursal", b =>
@@ -431,11 +278,6 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                     b.Navigation("Sucursal");
 
                     b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("Inventario.Domain.Catalogo.Articulo", b =>
-                {
-                    b.Navigation("CodigosAlternos");
                 });
 
             modelBuilder.Entity("Inventario.Domain.Catalogo.Categoria", b =>

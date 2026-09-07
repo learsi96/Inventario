@@ -1,0 +1,216 @@
+<section class="articulos">
+  <div class="encabezado">
+    <h1>Artículos</h1>
+    @if (esAdmin() && !mostrarForm()) {
+    <button type="button" class="primario" (click)="nuevo()">
+      Nuevo artículo
+    </button>
+    }
+  </div>
+
+  @if (error(); as e) {
+  <p class="error">{{ e }}</p>
+  } @if (mostrarForm()) {
+  <form class="formulario" [formGroup]="form" (ngSubmit)="guardar()">
+    <h2>{{ editandoId() ? 'Editar artículo' : 'Nuevo artículo' }}</h2>
+
+    <div class="grid">
+      <label>
+        SKU
+        <input
+          type="text"
+          formControlName="sku"
+          placeholder="(se genera solo)"
+        />
+      </label>
+      <label>
+        Código de barras
+        <input type="text" formControlName="codigoBarras" />
+      </label>
+      <label class="ancho">
+        Nombre
+        <input type="text" formControlName="nombre" />
+      </label>
+      <label>
+        Marca
+        <input type="text" formControlName="marca" />
+      </label>
+      <label>
+        Núm. de parte OEM
+        <input type="text" formControlName="numeroParteOem" />
+      </label>
+      <label>
+        Categoría
+        <select formControlName="categoriaId">
+          <option value="">(Otros)</option>
+          @for (c of categorias(); track c.id) {
+          <option [value]="c.id">{{ c.etiqueta }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        Unidad
+        <select formControlName="unidadMedidaId">
+          <option value="">Selecciona…</option>
+          @for (u of unidades(); track u.id) {
+          <option [value]="u.id">{{ u.codigo }} — {{ u.nombre }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        Costo
+        <input type="number" step="0.01" formControlName="costo" />
+      </label>
+      <label>
+        Precio de venta
+        <input type="number" step="0.01" formControlName="precioVenta" />
+      </label>
+      <label>
+        % IVA
+        <input type="number" step="0.01" formControlName="ivaPorcentaje" />
+      </label>
+      <label class="ancho">
+        Descripción
+        <textarea rows="2" formControlName="descripcion"></textarea>
+      </label>
+    </div>
+
+    <fieldset class="imagen">
+      <legend>Imagen</legend>
+      @if (editandoId()) { @if (imagenUrl(); as url) {
+      <img [src]="url" alt="Imagen del artículo" />
+      <button type="button" (click)="eliminarImagen()">Quitar imagen</button>
+      }
+      <label class="archivo">
+        {{ imagenUrl() ? 'Reemplazar' : 'Subir' }} imagen (JPG/PNG/WEBP, máx 5
+        MB)
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          [disabled]="subiendoImagen()"
+          (change)="subirImagen($event)"
+        />
+      </label>
+      } @else {
+      <p class="pista">Guarda el artículo para poder añadirle una imagen.</p>
+      }
+    </fieldset>
+
+    <fieldset class="alternos">
+      <legend>Códigos alternos</legend>
+      @for (grupo of codigosAlternos.controls; track $index) {
+      <div class="alterno-fila" [formGroup]="grupo">
+        <input type="text" formControlName="codigo" placeholder="Código" />
+        <select formControlName="tipo">
+          @for (t of tiposCodigo; track t) {
+          <option [value]="t">{{ t }}</option>
+          }
+        </select>
+        <button type="button" (click)="quitarCodigo($index)">Quitar</button>
+      </div>
+      }
+      <button type="button" (click)="agregarCodigo()">+ Agregar código</button>
+    </fieldset>
+
+    <div class="acciones">
+      <button type="submit" class="primario" [disabled]="form.invalid">
+        Guardar
+      </button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+  }
+
+  <div class="filtros">
+    <input
+      type="search"
+      placeholder="Buscar por SKU, nombre, marca, parte, código…"
+      [value]="filtroTexto()"
+      (input)="filtroTexto.set($any($event.target).value)"
+      (keyup.enter)="filtrar()"
+    />
+    <select
+      [value]="filtroCategoria()"
+      (change)="filtroCategoria.set($any($event.target).value); filtrar()"
+    >
+      <option value="">Todas las categorías</option>
+      @for (c of categorias(); track c.id) {
+      <option [value]="c.id">{{ c.etiqueta }}</option>
+      }
+    </select>
+    <select
+      [value]="filtroEstado()"
+      (change)="filtroEstado.set($any($event.target).value); filtrar()"
+    >
+      <option value="">Todos los estados</option>
+      <option value="Activo">Activo</option>
+      <option value="Descontinuado">Descontinuado</option>
+    </select>
+    <button type="button" (click)="filtrar()">Buscar</button>
+  </div>
+
+  @if (cargando()) {
+  <p>Cargando…</p>
+  } @else if (resultado().items.length === 0) {
+  <p class="vacio">No hay artículos que coincidan.</p>
+  } @else {
+  <table>
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Nombre</th>
+        <th>Marca</th>
+        <th>Categoría</th>
+        <th>Unidad</th>
+        <th class="num">Precio</th>
+        <th>Estado</th>
+        @if (esAdmin()) {
+        <th></th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (a of resultado().items; track a.id) {
+      <tr [class.descontinuado]="a.estado === 'Descontinuado'">
+        <td>{{ a.sku }}</td>
+        <td>{{ a.nombre }}</td>
+        <td>{{ a.marca ?? '—' }}</td>
+        <td>{{ a.categoriaNombre }}</td>
+        <td>{{ a.unidadCodigo }}</td>
+        <td class="num">{{ a.precioVenta | number: '1.2-2' }}</td>
+        <td>{{ a.estado }}</td>
+        @if (esAdmin()) {
+        <td class="fila-acciones">
+          <button type="button" (click)="editar(a)">Editar</button>
+          <button type="button" (click)="alternarEstado(a)">
+            {{ a.estado === 'Activo' ? 'Descontinuar' : 'Reactivar' }}
+          </button>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="paginacion">
+    <button
+      type="button"
+      [disabled]="pagina() <= 1"
+      (click)="irAPagina(pagina() - 1)"
+    >
+      ‹ Anterior
+    </button>
+    <span
+      >Página {{ pagina() }} de {{ totalPaginas() }} ({{ resultado().total
+      }})</span
+    >
+    <button
+      type="button"
+      [disabled]="pagina() >= totalPaginas()"
+      (click)="irAPagina(pagina() + 1)"
+    >
+      Siguiente ›
+    </button>
+  </div>
+  }
+</section>

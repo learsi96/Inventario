@@ -43,3 +43,105 @@ export interface CrearSucursal {
 }
 
 export type ActualizarSucursal = CrearSucursal;
+
+// ---- Catálogo ----
+
+/** Nodo del árbol de categorías. */
+export interface CategoriaNodo {
+  readonly id: string;
+  readonly nombre: string;
+  readonly categoriaPadreId: string | null;
+  readonly esSistema: boolean;
+  readonly activa: boolean;
+  readonly subcategorias: readonly CategoriaNodo[];
+}
+
+export interface CrearCategoria {
+  readonly nombre: string;
+  readonly categoriaPadreId: string | null;
+}
+
+export type ActualizarCategoria = CrearCategoria;
+
+/** Unidad de medida (catálogo global). */
+export interface UnidadMedida {
+  readonly id: string;
+  readonly codigo: string;
+  readonly nombre: string;
+  readonly activa: boolean;
+}
+
+export type EstadoArticulo = 'Activo' | 'Descontinuado';
+
+export type TipoCodigoAlterno =
+  'Oem' | 'Proveedor' | 'Equivalencia' | 'Interno';
+
+export interface CodigoAlterno {
+  readonly codigo: string;
+  readonly tipo: TipoCodigoAlterno;
+}
+
+/** Fila de la lista de artículos. */
+export interface ArticuloLista {
+  readonly id: string;
+  readonly sku: string;
+  readonly nombre: string;
+  readonly marca: string | null;
+  readonly categoriaNombre: string;
+  readonly unidadCodigo: string;
+  readonly precioVenta: number;
+  readonly estado: EstadoArticulo;
+  readonly tieneImagen: boolean;
+}
+
+/** Ficha completa del artículo. */
+export interface Articulo {
+  readonly id: string;
+  readonly sku: string;
+  readonly codigoBarras: string | null;
+  readonly nombre: string;
+  readonly descripcion: string | null;
+  readonly marca: string | null;
+  readonly numeroParteOem: string | null;
+  readonly categoriaId: string;
+  readonly categoriaNombre: string;
+  readonly unidadMedidaId: string;
+  readonly unidadCodigo: string;
+  readonly costo: number;
+  readonly precioVenta: number;
+  readonly ivaPorcentaje: number;
+  readonly estado: EstadoArticulo;
+  readonly tieneImagen: boolean;
+  readonly codigosAlternos: readonly CodigoAlterno[];
+  readonly creadoEn: string;
+}
+
+export interface GuardarArticulo {
+  readonly sku?: string | null;
+  readonly codigoBarras?: string | null;
+  readonly nombre: string;
+  readonly descripcion?: string | null;
+  readonly marca?: string | null;
+  readonly numeroParteOem?: string | null;
+  readonly categoriaId?: string | null;
+  readonly unidadMedidaId: string;
+  readonly costo: number;
+  readonly precioVenta: number;
+  readonly ivaPorcentaje?: number | null;
+  readonly codigosAlternos?: readonly CodigoAlterno[];
+}
+
+export interface FiltroArticulos {
+  readonly texto?: string;
+  readonly categoriaId?: string;
+  readonly estado?: EstadoArticulo;
+  readonly pagina?: number;
+  readonly tamano?: number;
+}
+
+export interface ResultadoPaginado<T> {
+  readonly items: readonly T[];
+  readonly total: number;
+  readonly pagina: number;
+  readonly tamano: number;
+}

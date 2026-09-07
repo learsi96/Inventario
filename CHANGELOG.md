@@ -19,3 +19,9 @@ y el proyecto se adhiere a [Versionado Semántico](https://semver.org/lang/es/).
   migración de EF Core (`Inicial`). CORS para el cliente web. Verificado
   end-to-end contra SQL Server 2022 en Docker: login, `/me`, CRUD de sucursales
   y aislamiento de datos entre partners.
+- **Hito 2 — Catálogo**: categorías jerárquicas (con "Otros" de sistema por
+  partner), catálogo global de unidades de medida, artículos (SKU autogenerado
+  editable, código de barras único, códigos alternos, categoría obligatoria, IVA
+  por artículo) con listado paginado + búsqueda + filtros, e imagen por artículo
+  (`IAlmacenArchivos`, local en dev). Pantallas web de artículos y categorías;
+  artículos pasa a ser la pantalla inicial. Enums JSON como texto.

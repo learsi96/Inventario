@@ -21,6 +21,7 @@ public sealed class ManejadorExcepciones(IProblemDetailsService problemDetails) 
             ConflictoException => (StatusCodes.Status409Conflict, "Conflicto"),
             ValidacionException => (StatusCodes.Status400BadRequest, "Datos inválidos"),
             AutenticacionException => (StatusCodes.Status401Unauthorized, "No autenticado"),
+            BadHttpRequestException => (StatusCodes.Status400BadRequest, "Solicitud mal formada"),
             _ => (0, string.Empty),
         };
 

@@ -1,3 +1,4 @@
+using Inventario.Domain.Catalogo;
 using Inventario.Domain.Identidad;
 using Inventario.Domain.Partners;
 using Inventario.Domain.Sucursales;
@@ -19,6 +20,14 @@ public interface IAppDbContext
     DbSet<UsuarioSucursal> UsuariosSucursales { get; }
 
     DbSet<Sucursal> Sucursales { get; }
+
+    DbSet<Categoria> Categorias { get; }
+
+    DbSet<UnidadMedida> UnidadesMedida { get; }
+
+    DbSet<Articulo> Articulos { get; }
+
+    DbSet<CodigoAlterno> CodigosAlternos { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

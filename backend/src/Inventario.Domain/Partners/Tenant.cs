@@ -20,4 +20,7 @@ public class Tenant : EntidadBase
     public string ZonaHoraria { get; set; } = "America/Mexico_City";
 
     public bool Activo { get; set; } = true;
+
+    /// <summary>Folio del que se deriva el siguiente SKU autogenerado (ART-000001…).</summary>
+    public int FolioArticulos { get; set; }
 }
