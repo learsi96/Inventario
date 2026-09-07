@@ -245,6 +245,71 @@ export interface Valorizacion {
   readonly porSucursal: readonly ValorizacionSucursal[];
 }
 
+// ---- Movimientos (Hito 4) ----
+
+export type TipoMovimiento =
+  | 'AjusteInventario'
+  | 'Entrada'
+  | 'Salida'
+  | 'Merma'
+  | 'TransferenciaSalida'
+  | 'TransferenciaEntrada';
+
+export type EstadoTransferencia =
+  'Solicitada' | 'EnTransito' | 'Recibida' | 'Cancelada';
+
+export interface RenglonMovimiento {
+  readonly articuloId: string;
+  readonly articuloSku: string;
+  readonly articuloNombre: string;
+  readonly cantidad: number;
+  readonly costoUnitario: number;
+  readonly cantidadResultante: number;
+  readonly costoPromedioResultante: number;
+}
+
+export interface MovimientoLista {
+  readonly id: string;
+  readonly folio: number;
+  readonly tipo: TipoMovimiento;
+  readonly fecha: string;
+  readonly sucursalNombre: string;
+  readonly motivo: string | null;
+  readonly referencia: string | null;
+  readonly usuarioNombre: string;
+  readonly renglones: number;
+  readonly total: number;
+}
+
+export interface Movimiento {
+  readonly id: string;
+  readonly folio: number;
+  readonly tipo: TipoMovimiento;
+  readonly fecha: string;
+  readonly sucursalId: string;
+  readonly sucursalNombre: string;
+  readonly sucursalDestinoId: string | null;
+  readonly sucursalDestinoNombre: string | null;
+  readonly estadoTransferencia: EstadoTransferencia | null;
+  readonly motivo: string | null;
+  readonly referencia: string | null;
+  readonly usuarioNombre: string;
+  readonly renglones: readonly RenglonMovimiento[];
+}
+
+export interface KardexRenglon {
+  readonly movimientoId: string;
+  readonly folio: number;
+  readonly tipo: TipoMovimiento;
+  readonly fecha: string;
+  readonly sucursalNombre: string;
+  readonly motivo: string | null;
+  readonly cantidad: number;
+  readonly costoUnitario: number;
+  readonly cantidadResultante: number;
+  readonly costoPromedioResultante: number;
+}
+
 export interface ResultadoPaginado<T> {
   readonly items: readonly T[];
   readonly total: number;

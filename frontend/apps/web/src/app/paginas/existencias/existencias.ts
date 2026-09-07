@@ -5,6 +5,7 @@ import {
   ArticulosService,
   CategoriasService,
   ExistenciasService,
+  MovimientosService,
   SucursalesService,
   UbicacionesService,
 } from '@inventario/inventario-data-access';
@@ -14,6 +15,7 @@ import type {
   CategoriaNodo,
   Existencia,
   ExistenciaLista,
+  KardexRenglon,
   ResultadoPaginado,
   Sucursal,
   Ubicacion,
@@ -37,8 +39,11 @@ export class ExistenciasPage implements OnInit {
   private readonly categoriasApi = inject(CategoriasService);
   private readonly articulosApi = inject(ArticulosService);
   private readonly ubicacionesApi = inject(UbicacionesService);
+  private readonly movimientosApi = inject(MovimientosService);
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);
+
+  protected readonly kardex = signal<KardexRenglon[] | null>(null);
 
   protected readonly sucursales = signal<Sucursal[]>([]);
   protected readonly categorias = signal<OpcionCategoria[]>([]);
@@ -183,6 +188,18 @@ export class ExistenciasPage implements OnInit {
 
   protected cerrarDetalle(): void {
     this.detalle.set(null);
+    this.kardex.set(null);
+  }
+
+  protected verKardex(): void {
+    const e = this.detalle();
+    if (!e) {
+      return;
+    }
+    this.movimientosApi.kardex(e.articuloId, this.sucursalId()).subscribe({
+      next: (k) => this.kardex.set(k),
+      error: () => this.error.set('No se pudo cargar el kardex.'),
+    });
   }
 
   protected guardarAjuste(): void {

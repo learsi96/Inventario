@@ -8,3 +8,9 @@ export {
   ExistenciasService,
 } from './lib/existencias.service';
 export type { FiltroExistencias } from './lib/existencias.service';
+export { MovimientosService } from './lib/movimientos.service';
+export type {
+  FiltroMovimientos,
+  RenglonEntrada,
+  RenglonSalida,
+} from './lib/movimientos.service';
