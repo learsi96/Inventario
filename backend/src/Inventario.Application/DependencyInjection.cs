@@ -1,5 +1,7 @@
 using Inventario.Application.Catalogo;
+using Inventario.Application.Existencias;
 using Inventario.Application.Identidad;
+using Inventario.Application.Movimientos;
 using Inventario.Application.Partners;
 using Inventario.Application.Sucursales;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,10 @@ public static class DependencyInjection
         services.AddScoped<CategoriasService>();
         services.AddScoped<UnidadesMedidaService>();
         services.AddScoped<ArticulosService>();
+        services.AddScoped<UbicacionesService>();
+        services.AddScoped<ExistenciasService>();
+        services.AddScoped<MotorExistencias>();
+        services.AddScoped<FoliosService>();
         return services;
     }
 }

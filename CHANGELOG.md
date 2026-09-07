@@ -29,3 +29,10 @@ y el proyecto se adhiere a [Versionado Semántico](https://semver.org/lang/es/).
   asignadas, contraseña inicial, reset, activar/desactivar), con protecciones
   contra que el administrador se bloquee a sí mismo. Pantalla web solo para
   Administrador (enlace de nav condicional).
+- **Hito 3 — Ubicaciones y existencias**: ubicaciones por sucursal; modelo de
+  existencia con grano (artículo, sucursal), costo promedio ponderado mantenido
+  por un motor compartido (`MotorExistencias`), parámetros de reorden,
+  desglose por ubicación, valorización y alerta de bajo mínimo. Ajuste/carga
+  inicial que genera un movimiento de inventario (`Movimiento`/`MovimientoRenglon`,
+  base del kardex). Migraciones consolidadas en `EsquemaInicial`. Pantallas web
+  de existencias (con valorización) y ubicaciones. ADR 0006.

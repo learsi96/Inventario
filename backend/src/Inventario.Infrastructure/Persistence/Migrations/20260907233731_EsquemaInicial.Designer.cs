@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventario.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260907223852_Articulos")]
-    partial class Articulos
+    [Migration("20260907233731_EsquemaInicial")]
+    partial class EsquemaInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -219,6 +219,132 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                     b.ToTable("UnidadesMedida", (string)null);
                 });
 
+            modelBuilder.Entity("Inventario.Domain.Existencias.Existencia", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("ActualizadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("ArticuloId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Cantidad")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("CostoPromedio")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<DateTimeOffset>("CreadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<decimal>("Maximo")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("Minimo")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("PuntoReorden")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<Guid>("SucursalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SucursalId");
+
+                    b.HasIndex("ArticuloId", "SucursalId")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "SucursalId");
+
+                    b.ToTable("Existencias", (string)null);
+                });
+
+            modelBuilder.Entity("Inventario.Domain.Existencias.ExistenciaUbicacion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("ActualizadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<decimal>("Cantidad")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<DateTimeOffset>("CreadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("ExistenciaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UbicacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UbicacionId");
+
+                    b.HasIndex("ExistenciaId", "UbicacionId")
+                        .IsUnique();
+
+                    b.ToTable("ExistenciasUbicacion", (string)null);
+                });
+
+            modelBuilder.Entity("Inventario.Domain.Existencias.Ubicacion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Activa")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("ActualizadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<DateTimeOffset>("CreadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<Guid>("SucursalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SucursalId", "Codigo")
+                        .IsUnique();
+
+                    b.ToTable("Ubicaciones", (string)null);
+                });
+
             modelBuilder.Entity("Inventario.Domain.Identidad.Usuario", b =>
                 {
                     b.Property<Guid>("Id")
@@ -287,6 +413,123 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                     b.ToTable("UsuariosSucursales", (string)null);
                 });
 
+            modelBuilder.Entity("Inventario.Domain.Movimientos.Movimiento", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("ActualizadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("CreadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("EstadoTransferencia")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTimeOffset>("Fecha")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("Folio")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Motivo")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<Guid?>("MovimientoRelacionadoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Referencia")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid?>("SucursalDestinoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SucursalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UsuarioNombre")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SucursalDestinoId");
+
+                    b.HasIndex("SucursalId");
+
+                    b.HasIndex("TenantId", "Fecha");
+
+                    b.HasIndex("TenantId", "Folio")
+                        .IsUnique();
+
+                    b.ToTable("Movimientos", (string)null);
+                });
+
+            modelBuilder.Entity("Inventario.Domain.Movimientos.MovimientoRenglon", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("ActualizadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("ArticuloId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Cantidad")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("CantidadResultante")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("CostoPromedioResultante")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("CostoUnitario")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<DateTimeOffset>("CreadoEn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("MovimientoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticuloId");
+
+                    b.HasIndex("MovimientoId");
+
+                    b.HasIndex("TenantId", "ArticuloId");
+
+                    b.ToTable("MovimientoRenglones", (string)null);
+                });
+
             modelBuilder.Entity("Inventario.Domain.Partners.Tenant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -308,6 +551,9 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int>("FolioArticulos")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FolioMovimientos")
                         .HasColumnType("int");
 
                     b.Property<decimal>("IvaPorcentaje")
@@ -417,6 +663,55 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                     b.Navigation("Articulo");
                 });
 
+            modelBuilder.Entity("Inventario.Domain.Existencias.Existencia", b =>
+                {
+                    b.HasOne("Inventario.Domain.Catalogo.Articulo", "Articulo")
+                        .WithMany()
+                        .HasForeignKey("ArticuloId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Inventario.Domain.Sucursales.Sucursal", "Sucursal")
+                        .WithMany()
+                        .HasForeignKey("SucursalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Articulo");
+
+                    b.Navigation("Sucursal");
+                });
+
+            modelBuilder.Entity("Inventario.Domain.Existencias.ExistenciaUbicacion", b =>
+                {
+                    b.HasOne("Inventario.Domain.Existencias.Existencia", "Existencia")
+                        .WithMany("PorUbicacion")
+                        .HasForeignKey("ExistenciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventario.Domain.Existencias.Ubicacion", "Ubicacion")
+                        .WithMany()
+                        .HasForeignKey("UbicacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Existencia");
+
+                    b.Navigation("Ubicacion");
+                });
+
+            modelBuilder.Entity("Inventario.Domain.Existencias.Ubicacion", b =>
+                {
+                    b.HasOne("Inventario.Domain.Sucursales.Sucursal", "Sucursal")
+                        .WithMany()
+                        .HasForeignKey("SucursalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Sucursal");
+                });
+
             modelBuilder.Entity("Inventario.Domain.Identidad.UsuarioSucursal", b =>
                 {
                     b.HasOne("Inventario.Domain.Sucursales.Sucursal", "Sucursal")
@@ -436,6 +731,43 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("Inventario.Domain.Movimientos.Movimiento", b =>
+                {
+                    b.HasOne("Inventario.Domain.Sucursales.Sucursal", "SucursalDestino")
+                        .WithMany()
+                        .HasForeignKey("SucursalDestinoId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Inventario.Domain.Sucursales.Sucursal", "Sucursal")
+                        .WithMany()
+                        .HasForeignKey("SucursalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Sucursal");
+
+                    b.Navigation("SucursalDestino");
+                });
+
+            modelBuilder.Entity("Inventario.Domain.Movimientos.MovimientoRenglon", b =>
+                {
+                    b.HasOne("Inventario.Domain.Catalogo.Articulo", "Articulo")
+                        .WithMany()
+                        .HasForeignKey("ArticuloId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Inventario.Domain.Movimientos.Movimiento", "Movimiento")
+                        .WithMany("Renglones")
+                        .HasForeignKey("MovimientoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Articulo");
+
+                    b.Navigation("Movimiento");
+                });
+
             modelBuilder.Entity("Inventario.Domain.Catalogo.Articulo", b =>
                 {
                     b.Navigation("CodigosAlternos");
@@ -446,9 +778,19 @@ namespace Inventario.Infrastructure.Persistence.Migrations
                     b.Navigation("Subcategorias");
                 });
 
+            modelBuilder.Entity("Inventario.Domain.Existencias.Existencia", b =>
+                {
+                    b.Navigation("PorUbicacion");
+                });
+
             modelBuilder.Entity("Inventario.Domain.Identidad.Usuario", b =>
                 {
                     b.Navigation("Sucursales");
+                });
+
+            modelBuilder.Entity("Inventario.Domain.Movimientos.Movimiento", b =>
+                {
+                    b.Navigation("Renglones");
                 });
 #pragma warning restore 612, 618
         }

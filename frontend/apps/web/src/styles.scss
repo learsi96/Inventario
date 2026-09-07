@@ -1,1 +1,129 @@
-/* You can add global styles to this file, and also import other style files */
+/* Estilos globales. El sistema visual definitivo llega en la Fase D. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  color: #1f2937;
+  background: #f3f4f6;
+}
+
+/* ---- Utilidades compartidas entre pantallas ---- */
+
+.pagina {
+  padding: 0;
+}
+
+.pagina .encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pagina h1 {
+  margin: 0;
+}
+
+.error-msg {
+  color: #b91c1c;
+}
+
+.btn {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #f9fafb;
+  cursor: pointer;
+  font: inherit;
+}
+
+.btn.primario {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.tabla th,
+.tabla td {
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabla th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}
+
+.tabla .num {
+  text-align: right;
+}
+
+.tabla tr.atenuada td {
+  color: #9ca3af;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.campos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: #374151;
+}
+
+.campo.check {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.campo input:not([type='checkbox']),
+.campo select,
+.campo textarea {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.acciones-fila {
+  display: flex;
+  gap: 0.4rem;
+}
