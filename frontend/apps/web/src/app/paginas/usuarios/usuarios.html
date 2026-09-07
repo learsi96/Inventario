@@ -1,0 +1,108 @@
+<section class="usuarios">
+  <div class="encabezado">
+    <h1>Usuarios</h1>
+    @if (!mostrarForm()) {
+    <button type="button" class="primario" (click)="nuevo()">
+      Nuevo usuario
+    </button>
+    }
+  </div>
+
+  @if (error(); as e) {
+  <p class="error">{{ e }}</p>
+  } @if (mostrarForm()) {
+  <form class="formulario" [formGroup]="form" (ngSubmit)="guardar()">
+    <h2>{{ editandoId() ? 'Editar usuario' : 'Nuevo usuario' }}</h2>
+
+    <div class="grid">
+      <label>
+        Email
+        <input type="email" formControlName="email" />
+      </label>
+      <label>
+        Nombre completo
+        <input type="text" formControlName="nombreCompleto" />
+      </label>
+      <label>
+        Rol
+        <select formControlName="rol">
+          @for (r of roles; track r) {
+          <option [value]="r">{{ r }}</option>
+          }
+        </select>
+      </label>
+      @if (!editandoId()) {
+      <label>
+        Contraseña inicial
+        <input type="text" formControlName="contrasena" />
+      </label>
+      } @if (editandoId()) {
+      <label class="check">
+        <input type="checkbox" formControlName="activo" />
+        Activo
+      </label>
+      }
+    </div>
+
+    <fieldset class="sucursales">
+      <legend>Sucursales asignadas</legend>
+      @for (s of sucursales(); track s.id) {
+      <label class="check">
+        <input
+          type="checkbox"
+          [checked]="sucursalesSel().has(s.id)"
+          (change)="alternarSucursal(s.id)"
+        />
+        {{ s.nombre }} ({{ s.codigo }})
+      </label>
+      }
+    </fieldset>
+
+    <div class="acciones">
+      <button type="submit" class="primario" [disabled]="form.invalid">
+        Guardar
+      </button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+  } @if (cargando()) {
+  <p>Cargando…</p>
+  } @else {
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Sucursales</th>
+        <th>Estado</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (u of usuarios(); track u.id) {
+      <tr [class.inactivo]="!u.activo">
+        <td>
+          {{ u.nombreCompleto }} @if (u.esUsuarioActual) {
+          <span class="etiqueta">tú</span>
+          }
+        </td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.rol }}</td>
+        <td>{{ u.sucursalIds.length }}</td>
+        <td>{{ u.activo ? 'Activo' : 'Inactivo' }}</td>
+        <td class="fila-acciones">
+          <button type="button" (click)="editar(u)">Editar</button>
+          <button type="button" (click)="resetContrasena(u)">Contraseña</button>
+          @if (!u.esUsuarioActual) {
+          <button type="button" (click)="alternarActivacion(u)">
+            {{ u.activo ? 'Desactivar' : 'Activar' }}
+          </button>
+          }
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+</section>

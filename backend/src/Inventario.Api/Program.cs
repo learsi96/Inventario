@@ -95,6 +95,7 @@ app.MapGet("/health", () => Results.Ok(new HealthResponse("ok", "Inventario.Api"
     .AllowAnonymous();
 
 app.MapAuthEndpoints();
+app.MapUsuariosEndpoints();
 app.MapSucursalesEndpoints();
 app.MapPartnersEndpoints();
 app.MapCatalogoEndpoints();

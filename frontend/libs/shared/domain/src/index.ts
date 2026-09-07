@@ -26,6 +26,39 @@ export interface UsuarioActual {
   readonly sucursalIds: readonly string[];
 }
 
+export const ROLES: readonly RolUsuario[] = [
+  'Administrador',
+  'EncargadoAlmacen',
+  'Vendedor',
+  'Consulta',
+];
+
+/** Usuario de un partner (gestión por Administrador). */
+export interface Usuario {
+  readonly id: string;
+  readonly email: string;
+  readonly nombreCompleto: string;
+  readonly rol: RolUsuario;
+  readonly activo: boolean;
+  readonly sucursalIds: readonly string[];
+  readonly esUsuarioActual: boolean;
+}
+
+export interface CrearUsuario {
+  readonly email: string;
+  readonly nombreCompleto: string;
+  readonly rol: RolUsuario;
+  readonly contrasena: string;
+  readonly sucursalIds: readonly string[];
+}
+
+export interface ActualizarUsuario {
+  readonly nombreCompleto: string;
+  readonly rol: RolUsuario;
+  readonly activo: boolean;
+  readonly sucursalIds: readonly string[];
+}
+
 /** Sucursal de un partner. */
 export interface Sucursal {
   readonly id: string;

@@ -32,6 +32,11 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
           import('./paginas/articulos/articulos').then((m) => m.ArticulosPage),
       },
+      {
+        path: 'usuarios',
+        loadComponent: () =>
+          import('./paginas/usuarios/usuarios').then((m) => m.UsuariosPage),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

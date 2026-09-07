@@ -25,3 +25,7 @@ y el proyecto se adhiere a [Versionado Semántico](https://semver.org/lang/es/).
   por artículo) con listado paginado + búsqueda + filtros, e imagen por artículo
   (`IAlmacenArchivos`, local en dev). Pantallas web de artículos y categorías;
   artículos pasa a ser la pantalla inicial. Enums JSON como texto.
+- **Hito U — Gestión de usuarios**: CRUD de usuarios del partner (rol, sucursales
+  asignadas, contraseña inicial, reset, activar/desactivar), con protecciones
+  contra que el administrador se bloquee a sí mismo. Pantalla web solo para
+  Administrador (enlace de nav condicional).
