@@ -1,0 +1,60 @@
+# CI del backend (.NET). Pendiente de vincular a Azure DevOps (Hito 9 o cuando se
+# cree el proyecto). Se ejecuta al cambiar algo bajo backend/.
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - backend/*
+      - azure-pipelines/backend-ci.yml
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - backend/*
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: Release
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+steps:
+  - task: UseDotNet@2
+    displayName: Instalar .NET SDK 10
+    inputs:
+      packageType: sdk
+      version: 10.0.x
+
+  - script: dotnet restore backend/Inventario.slnx
+    displayName: Restore
+
+  - script: dotnet build backend/Inventario.slnx -c $(buildConfiguration) --no-restore
+    displayName: Build
+
+  - script: >
+      dotnet test backend/Inventario.slnx -c $(buildConfiguration) --no-build
+      --logger trx --results-directory $(Agent.TempDirectory)/testresults
+      --collect:"XPlat Code Coverage"
+    displayName: Test
+
+  - task: PublishTestResults@2
+    displayName: Publicar resultados de pruebas
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: VSTest
+      testResultsFiles: $(Agent.TempDirectory)/testresults/**/*.trx
+      failTaskOnFailedTests: true
+
+  - task: PublishCodeCoverageResults@2
+    displayName: Publicar cobertura
+    condition: succeededOrFailed()
+    inputs:
+      summaryFileLocation: $(Agent.TempDirectory)/testresults/**/coverage.cobertura.xml

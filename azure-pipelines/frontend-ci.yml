@@ -1,0 +1,46 @@
+# CI del frontend (Nx / Angular / Ionic). Pendiente de vincular a Azure DevOps
+# (Hito 9 o cuando se cree el proyecto). Se ejecuta al cambiar algo bajo frontend/.
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - frontend/*
+      - azure-pipelines/frontend-ci.yml
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - frontend/*
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  CI: "true"
+
+steps:
+  - task: NodeTool@0
+    displayName: Instalar Node 22
+    inputs:
+      versionSpec: 22.x
+
+  - script: |
+      corepack enable
+      corepack prepare pnpm@latest --activate
+    displayName: Habilitar pnpm
+
+  - script: pnpm install --frozen-lockfile
+    workingDirectory: frontend
+    displayName: Instalar dependencias
+
+  # De momento run-many (compila/prueba todo). Cuando el repo tenga historial
+  # estable en Azure Repos, migrar a `nx affected` con nx-set-shas.
+  - script: pnpm exec nx run-many -t lint test build
+    workingDirectory: frontend
+    displayName: Lint + Test + Build
