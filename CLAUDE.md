@@ -50,7 +50,14 @@ límites de módulo falla. Alias de import: `@inventario/<nombre-lib>`.
 ```bash
 cp infra/.env.example infra/.env
 docker compose -f infra/docker-compose.yml up -d
+# Docker Desktop está instalado por-usuario: si `docker` no está en PATH, usar
+# C:\Users\<user>\AppData\Local\Programs\DockerDesktop\resources\bin\docker.exe
 ```
+
+### Datos de desarrollo (seed)
+Al arrancar la API en `Development` se crea, si no existe, un partner demo:
+- **Admin del partner:** `admin@demo.com` / `Demo1234!` (tenant `DEMO`, sucursal `MATRIZ`)
+- **Superadmin de plataforma** (config, sin BD): `superadmin@inventario.local` / `Super1234!`
 
 ## Convenciones
 

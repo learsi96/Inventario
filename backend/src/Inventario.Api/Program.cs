@@ -53,6 +53,17 @@ builder.Services
 
 builder.Services.AddAuthorizationBuilder().AddPoliticasInventario();
 
+const string CorsClientesWeb = "clientes-web";
+var origenesPermitidos = builder.Configuration
+    .GetSection("Cors:OrigenesPermitidos").Get<string[]>() ?? [];
+builder.Services.AddCors(options => options.AddPolicy(CorsClientesWeb, policy =>
+{
+    if (origenesPermitidos.Length > 0)
+    {
+        policy.WithOrigins(origenesPermitidos).AllowAnyHeader().AllowAnyMethod();
+    }
+}));
+
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<ManejadorExcepciones>();
 
@@ -70,6 +81,7 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
+app.UseCors(CorsClientesWeb);
 app.UseAuthentication();
 app.UseAuthorization();
 

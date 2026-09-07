@@ -16,5 +16,6 @@ y el proyecto se adhiere a [Versionado Semántico](https://semver.org/lang/es/).
   superadmin), roles y políticas de autorización, filtro global por `TenantId` en
   EF Core con asignación automática, alta de partners, y CRUD de sucursales
   (backend + pantallas web con login, guard, interceptor y shell). Primera
-  migración de EF Core (`Inicial`). Pendiente: aplicar la migración contra SQL
-  Server y validar el flujo completo end-to-end.
+  migración de EF Core (`Inicial`). CORS para el cliente web. Verificado
+  end-to-end contra SQL Server 2022 en Docker: login, `/me`, CRUD de sucursales
+  y aislamiento de datos entre partners.
