@@ -102,6 +102,7 @@ app.MapCatalogoEndpoints();
 app.MapArticulosEndpoints();
 app.MapExistenciasEndpoints();
 app.MapMovimientosEndpoints();
+app.MapTransferenciasEndpoints();
 
 if (app.Environment.IsDevelopment())
 {

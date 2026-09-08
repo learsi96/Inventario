@@ -310,6 +310,43 @@ export interface KardexRenglon {
   readonly costoPromedioResultante: number;
 }
 
+// ---- Transferencias (Hito 5) ----
+
+export interface RenglonTransferencia {
+  readonly articuloId: string;
+  readonly articuloSku: string;
+  readonly articuloNombre: string;
+  readonly cantidadEnviada: number;
+  readonly cantidadRecibida: number | null;
+  readonly costoUnitario: number;
+}
+
+export interface TransferenciaLista {
+  readonly id: string;
+  readonly folio: number;
+  readonly estado: EstadoTransferencia;
+  readonly fecha: string;
+  readonly sucursalOrigenNombre: string;
+  readonly sucursalDestinoNombre: string;
+  readonly renglones: number;
+  readonly usuarioNombre: string;
+}
+
+export interface Transferencia {
+  readonly id: string;
+  readonly folio: number;
+  readonly estado: EstadoTransferencia;
+  readonly fecha: string;
+  readonly sucursalOrigenId: string;
+  readonly sucursalOrigenNombre: string;
+  readonly sucursalDestinoId: string;
+  readonly sucursalDestinoNombre: string;
+  readonly motivo: string | null;
+  readonly usuarioNombre: string;
+  readonly movimientoEntradaId: string | null;
+  readonly renglones: readonly RenglonTransferencia[];
+}
+
 export interface ResultadoPaginado<T> {
   readonly items: readonly T[];
   readonly total: number;

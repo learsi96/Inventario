@@ -26,6 +26,7 @@ public static class DependencyInjection
         services.AddScoped<MotorExistencias>();
         services.AddScoped<FoliosService>();
         services.AddScoped<MovimientosService>();
+        services.AddScoped<TransferenciasService>();
         return services;
     }
 }
