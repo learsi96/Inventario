@@ -1,4 +1,5 @@
 using Inventario.Domain.Catalogo;
+using Inventario.Domain.Conteos;
 using Inventario.Domain.Existencias;
 using Inventario.Domain.Identidad;
 using Inventario.Domain.Movimientos;
@@ -40,6 +41,10 @@ public interface IAppDbContext
     DbSet<Movimiento> Movimientos { get; }
 
     DbSet<MovimientoRenglon> MovimientoRenglones { get; }
+
+    DbSet<Conteo> Conteos { get; }
+
+    DbSet<ConteoDetalle> ConteoDetalles { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

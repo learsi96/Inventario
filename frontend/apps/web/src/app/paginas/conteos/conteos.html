@@ -1,0 +1,156 @@
+<section class="conteos">
+  <div class="encabezado">
+    <h1>Conteos físicos</h1>
+  </div>
+
+  @if (error(); as e) {
+  <p class="error-msg">{{ e }}</p>
+  } @if (esOperador() && !detalle()) {
+  <div class="panel nuevo">
+    <h2>Nuevo conteo</h2>
+    <div class="fila">
+      <label class="campo">
+        Sucursal
+        <select
+          [ngModel]="nuevaSucursal()"
+          (ngModelChange)="nuevaSucursal.set($event)"
+        >
+          @for (s of sucursales(); track s.id) {
+          <option [value]="s.id">{{ s.nombre }}</option>
+          }
+        </select>
+      </label>
+      <label class="campo">
+        Categoría (opcional)
+        <select
+          [ngModel]="nuevaCategoria()"
+          (ngModelChange)="nuevaCategoria.set($event)"
+        >
+          <option value="">Todo el inventario</option>
+          @for (c of categorias(); track c.id) {
+          <option [value]="c.id">{{ c.etiqueta }}</option>
+          }
+        </select>
+      </label>
+      <button type="button" class="btn primario" (click)="iniciar()">
+        Iniciar conteo
+      </button>
+    </div>
+  </div>
+  } @if (!detalle()) {
+  <div class="filtros">
+    <select
+      [value]="filtroEstado()"
+      (change)="filtroEstado.set($any($event.target).value); recargar()"
+    >
+      <option value="">Todos los estados</option>
+      @for (e of estados; track e) {
+      <option [value]="e">{{ e }}</option>
+      }
+    </select>
+  </div>
+
+  @if (cargando()) {
+  <p>Cargando…</p>
+  } @else if (lista().length === 0) {
+  <p class="vacio">Sin conteos.</p>
+  } @else {
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Folio</th>
+        <th>Fecha</th>
+        <th>Sucursal</th>
+        <th>Categoría</th>
+        <th>Estado</th>
+        <th class="num">Contados</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of lista(); track c.id) {
+      <tr>
+        <td>#{{ c.folio }}</td>
+        <td>{{ c.creadoEn | date: 'short' }}</td>
+        <td>{{ c.sucursalNombre }}</td>
+        <td>{{ c.categoriaNombre ?? 'Todo' }}</td>
+        <td>{{ c.estado }}</td>
+        <td class="num">{{ c.contados }} / {{ c.articulos }}</td>
+        <td>
+          <button type="button" class="btn" (click)="verDetalle(c)">
+            Abrir
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  } } @if (detalle(); as d) {
+  <div class="panel detalle">
+    <div class="detalle-encabezado">
+      <h2>Conteo #{{ d.folio }} — {{ d.estado }}</h2>
+      <button type="button" class="btn" (click)="detalle.set(null)">
+        Volver a la lista
+      </button>
+    </div>
+    <p class="resumen">
+      {{ d.sucursalNombre }} · {{ d.categoriaNombre ?? 'Todo el inventario' }} ·
+      {{ d.usuarioNombre }} · contados {{ d.contados }} · con diferencia {{
+      d.conDiferencia }} · diferencia neta {{ d.diferenciaNeta | number: '1.0-2'
+      }}
+    </p>
+
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>SKU</th>
+          <th>Artículo</th>
+          <th class="num">Sistema</th>
+          <th class="num">Contado</th>
+          <th class="num">Diferencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of d.detalles; track r.articuloId) {
+        <tr [class.dif]="r.cantidadContada !== null && r.diferencia !== 0">
+          <td>{{ r.articuloSku }}</td>
+          <td>{{ r.articuloNombre }}</td>
+          <td class="num">{{ r.cantidadSistema | number: '1.0-2' }}</td>
+          <td class="num">
+            @if (d.estado === 'EnProgreso' && esOperador()) {
+            <input
+              type="number"
+              step="0.01"
+              [value]="capturas()[r.articuloId] ?? ''"
+              (input)="fijarCaptura(r.articuloId, $any($event.target).value)"
+            />
+            } @else { {{ r.cantidadContada === null ? '—' : (r.cantidadContada |
+            number: '1.0-2') }} }
+          </td>
+          <td class="num">
+            {{ r.cantidadContada === null ? '—' : (r.diferencia | number:
+            '1.0-2') }}
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+
+    @if (d.estado === 'EnProgreso' && esOperador()) {
+    <div class="acciones">
+      <button type="button" class="btn" (click)="guardarCaptura()">
+        Guardar captura
+      </button>
+      <button type="button" class="btn primario" (click)="conciliar()">
+        Conciliar (ajusta existencias)
+      </button>
+      <button type="button" class="btn" (click)="cancelar()">
+        Cancelar conteo
+      </button>
+    </div>
+    } @if (d.movimientoAjusteId) {
+    <p class="nota">Se generó un movimiento de ajuste al conciliar.</p>
+    }
+  </div>
+  }
+</section>

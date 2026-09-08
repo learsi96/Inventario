@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using Inventario.Application.Abstractions;
 using Inventario.Domain.Catalogo;
 using Inventario.Domain.Common;
+using Inventario.Domain.Conteos;
 using Inventario.Domain.Existencias;
 using Inventario.Domain.Identidad;
 using Inventario.Domain.Movimientos;
@@ -47,6 +48,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, ICurrentUser c
     public DbSet<Movimiento> Movimientos => Set<Movimiento>();
 
     public DbSet<MovimientoRenglon> MovimientoRenglones => Set<MovimientoRenglon>();
+
+    public DbSet<Conteo> Conteos => Set<Conteo>();
+
+    public DbSet<ConteoDetalle> ConteoDetalles => Set<ConteoDetalle>();
 
     /// <summary>Tenant en contexto. Lo lee el filtro global de consultas en cada query.</summary>
     public Guid? TenantIdActual => currentUser.TenantId;
