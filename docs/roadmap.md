@@ -1,27 +1,44 @@
 # Roadmap — MVP1
 
 Orden de construcción del MVP1. Cada hito entrega algo demostrable al cliente.
-Alcance detallado y fuera de alcance: ver [PRD.md](PRD.md).
+Alcance detallado y fuera de alcance: ver [PRD.md](PRD.md). Historial: [CHANGELOG.md](../CHANGELOG.md).
+
+## Estado global (2026-09-08)
+
+**Backend del MVP1 funcionalmente completo.** Hecho: **0, 1, 2, U, 3, 4, 5, 6, 8**
+y la **base de diseño (D)**. 36 pruebas backend + 8 proyectos frontend en verde,
+todo en `main` (GitHub `learsi96/Inventario`).
+
+**Próximos pasos (para la siguiente sesión):**
+1. **Ajuste de diseño desde Figma** (segunda parte de la Fase D) — cuando el autor
+   tenga el diseño en Figma y se configure el MCP (requiere plan Dev/Full).
+2. **Hito 7 — App móvil** (Ionic + Capacitor sobre `apps/mobile`, escaneo).
+3. **Hito 9 — Despliegue** a Azure (Bicep, pipelines de CD, migrar la BD).
+
+Entorno listo: contenedor `inventario-sqlserver` con la BD `InventarioDev`
+migrada y seed demo; ver [CLAUDE.md](../CLAUDE.md).
+
+## Hitos
 
 | Hito | Entrega | Estado |
 |---|---|---|
-| **0 — Fundaciones** | Andamiaje: repo, Nx (`frontend/`: apps `web` y `mobile` + 6 libs), solución .NET 10 (`backend/`), docker-compose, pipelines CI, tooling, docs. Todo compila y las pruebas pasan; sin funcionalidad de negocio. La app `mobile` es Angular puro; Ionic + Capacitor se añaden en el Hito 7. | Hecho |
-| **1 — Identidad y multi-tenant** | Autenticación JWT, usuarios, roles, permiso por sucursal, alta de partners, `TenantId` + global query filter operativos. Entidad `Sucursal` con CRUD end-to-end en web. Primera migración de EF Core. | Hecho. Verificado end-to-end contra SQL Server 2022 (Docker): login, `/me`, CRUD de sucursales, aislamiento entre partners y CORS del cliente web. Falta la pantalla de gestión de usuarios (se hará junto al Hito 2). |
-| **D — Diseño** | Sistema visual "limpio y profesional" aplicado en código: tokens (paleta slate + azul, tipografía, espaciado, sombras, radios), componentes base (`.btn`, `.tabla`, `.panel`, `.campo`, `.badge`, `.tarjeta`), barra lateral oscura con navegación agrupada e iconos, layout responsivo, y rediseño de login. Pendiente de ajuste fino desde Figma más adelante (decisión del autor). | Base hecha. Ajuste desde Figma: pendiente. |
-| **2 — Catálogo** | Categorías jerárquicas (con categoría "Otros" de sistema por partner), unidades de medida, artículos con SKU autogenerado, código de barras, códigos alternos, IVA por artículo y foto (`IAlmacenArchivos` local en dev; Azure Blob en el Hito 9). Sin importación masiva (MVP2). | Hecho. Verificado contra SQL: categorías (árbol, ciclos, "Otros"), artículos (SKU secuencial, búsqueda por marca/OEM/código alterno, filtros, paginación), imagen (subir/servir/borrar). |
-| **U — Gestión de usuarios** | CRUD de usuarios del partner: rol, sucursales asignadas, contraseña inicial, reset, activar/desactivar. Pantalla solo para Administrador. Cierra lo que quedó del Hito 1. | Hecho. Verificado contra SQL: alta con sucursales, login del nuevo usuario, política 403 para no-admin, bloqueo de auto-desactivación, reset de contraseña, login bloqueado al desactivar. |
-| **3 — Ubicaciones y existencias** | Ubicaciones por sucursal; existencia por artículo/sucursal (+ desglose por ubicación); mínimos, máximos y punto de reorden; costeo promedio ponderado (motor compartido); valorización; alerta de bajo mínimo; ajuste/carga inicial (genera movimiento). Ver [ADR 0006](decisions/0006-modelo-de-existencias.md). | Hecho. Verificado contra SQL: ubicaciones, ajuste, parámetros, valorización, bajo mínimo, desglose por ubicación. |
-| **4 — Movimientos** | Entrada (recalcula promedio ponderado), salida, merma, ajuste. Folios consecutivos. Kardex por artículo con existencia y costo resultantes. Pantalla de movimientos (alta multi-renglón) y kardex en el detalle de existencias. | Hecho. Verificado contra SQL: entrada promedia (5@95 + 10@120 → 111.67), salida usa el promedio, merma insuficiente rechazada, kardex correcto. |
-| **5 — Transferencias** | Entre sucursales con estados solicitada → en tránsito → recibida; costo de origen; recepción parcial (diferencias visibles enviado/recibido); cancelación con devolución al origen. Pantalla de transferencias. | Hecho. Verificado contra SQL: envío descuenta origen, recepción de 3 de 4 (1 perdida), cancelación en tránsito devuelve. |
-| **6 — Conteos físicos** | Conteo por sucursal (opcionalmente por categoría); fotografía las existencias al iniciar; captura incremental; conciliación que ajusta a lo contado y genera el movimiento; cancelación. Un solo conteo en progreso por sucursal. Pantalla de conteos con captura y diferencias. | Hecho. Verificado contra SQL: iniciar/capturar/conciliar ajusta la existencia (10→7), sin diferencias no genera movimiento, doble conteo → 409. |
-| **7 — App móvil** | Añadir Ionic + Capacitor a `apps/mobile`. Consulta de existencias, escaneo de código de barras, transferencias y conteos desde el piso. Solo online. | Pendiente |
-| **8 — Reportes** | Existencias, valorización, kardex y diferencias de conteo, exportables a Excel (ClosedXML) y PDF (QuestPDF Community). Pantalla /reportes con filtros y descarga. Los datos ya venían de los hitos 3/4/6. | Hecho. Verificado contra SQL: los 4 reportes generan xlsx y pdf válidos. |
-| **9 — Despliegue** | Bicep del entorno de pruebas, pipelines de CD, migración local → Azure, validación con el cliente. | Pendiente |
+| **0 — Fundaciones** | Repo, Nx (`frontend/`), solución .NET 10 (`backend/`), docker-compose, pipelines CI, tooling, docs. | ✅ Hecho |
+| **1 — Identidad y multi-tenant** | JWT (login / `/me` / superadmin), roles y políticas, `TenantId` + global query filter, alta de partners, CRUD de sucursales. Migración `Inicial` (luego consolidada en `EsquemaInicial`). CORS. | ✅ Verificado end-to-end |
+| **2 — Catálogo** | Categorías jerárquicas (con "Otros" de sistema), unidades de medida (catálogo global), artículos (SKU autogenerado, código de barras único, códigos alternos, IVA por artículo, foto vía `IAlmacenArchivos`). Listado paginado + búsqueda + filtros. Sin importación masiva (→ MVP2). | ✅ Verificado |
+| **U — Gestión de usuarios** | CRUD de usuarios del partner (rol, sucursales, contraseña inicial, reset, activar/desactivar); protecciones anti auto-bloqueo. Pantalla solo Admin. | ✅ Verificado |
+| **3 — Ubicaciones y existencias** | Ubicaciones por sucursal; existencia (grano artículo×sucursal) + desglose por ubicación; mín/máx/reorden; **costeo promedio ponderado** (`MotorExistencias`); valorización; alerta de bajo mínimo; ajuste/carga inicial. [ADR 0006](decisions/0006-modelo-de-existencias.md). | ✅ Verificado |
+| **4 — Movimientos** | Entrada (recalcula promedio), salida, merma. Folios consecutivos. **Kardex** por artículo con existencia y costo resultantes. Pantalla de movimientos + kardex embebido en existencias. | ✅ Verificado |
+| **5 — Transferencias** | Entre sucursales: solicitada → en tránsito → recibida; costo de origen; recepción parcial (diferencia visible); cancelación con devolución. Pantalla de transferencias. | ✅ Verificado |
+| **6 — Conteos físicos** | Conteo por sucursal (opcional por categoría); fotografía las existencias; captura incremental; conciliación que ajusta y genera movimiento; cancelación. Un solo conteo en progreso por sucursal. Pantalla de conteos. | ✅ Verificado |
+| **8 — Reportes** | Existencias, valorización, kardex y diferencias de conteo → Excel (ClosedXML) y PDF (QuestPDF Community). Pantalla `/reportes` con filtros y descarga autenticada. | ✅ Verificado |
+| **D — Diseño** | **Base:** sistema visual "limpio y profesional" en código (tokens, componentes `.btn/.tabla/.panel/.campo/.badge/.tarjeta`, barra lateral oscura agrupada, login). **Falta:** ajuste fino desde Figma (el autor lo hará más adelante). | 🟡 Base hecha |
+| **7 — App móvil** | Añadir Ionic + Capacitor a `apps/mobile`. Consulta de existencias, escaneo de código de barras, transferencias y conteos desde el piso. Solo online. | ⬜ Pendiente (el autor lo dejó para el final) |
+| **9 — Despliegue** | Bicep del entorno de pruebas, pipelines de CD, migración local → Azure, validación con el cliente. | ⬜ Pendiente |
 
 ## Después del MVP1
 
-Ver la sección "Fuera de alcance del MVP1" del PRD: **importación masiva de
-catálogo (Excel/CSV)**, compras, ventas/ticket, modo offline en móvil,
-equivalencias y aplicaciones por vehículo, listas de precios múltiples,
-catálogo externo de refacciones por código de barras, onboarding self-service
-de partners, Entra External ID, reportes avanzados y dashboards.
+Ver "Fuera de alcance del MVP1" en el PRD: **importación masiva de catálogo
+(Excel/CSV)**, compras, ventas/ticket, modo offline en móvil, equivalencias y
+aplicaciones por vehículo, listas de precios múltiples, catálogo externo por
+código de barras, onboarding self-service de partners, Entra External ID,
+reportes avanzados y dashboards, costeo PEPS.

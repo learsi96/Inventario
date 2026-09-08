@@ -1,7 +1,8 @@
 # PRD — Sistema de Inventario Multi-Partner
 
-- **Estado:** Borrador 1 (Fase 0)
-- **Fecha:** 2026-09-07
+- **Estado:** Vigente. MVP1 en construcción — backend funcionalmente completo
+  (hitos 0–8 salvo el 7 móvil y el 9 despliegue). Ver [roadmap.md](roadmap.md).
+- **Fecha:** 2026-09-07 (revisado 2026-09-08)
 - **Autor:** israelcm250@gmail.com
 - **Proyecto:** personal
 
