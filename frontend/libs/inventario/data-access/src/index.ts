@@ -14,3 +14,4 @@ export type {
   RenglonEntrada,
   RenglonSalida,
 } from './lib/movimientos.service';
+export { TransferenciasService } from './lib/transferencias.service';

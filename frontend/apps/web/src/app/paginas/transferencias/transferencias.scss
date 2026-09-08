@@ -1,0 +1,124 @@
+.transferencias {
+  max-width: 1000px;
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin: 1rem 0;
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+  }
+
+  .cabecera {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .buscar {
+    max-width: 420px;
+    margin-bottom: 1rem;
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font: inherit;
+    }
+
+    .resultados {
+      list-style: none;
+      margin: 0.25rem 0 0;
+      padding: 0;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      max-height: 200px;
+      overflow-y: auto;
+
+      li button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 0.45rem 0.75rem;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+
+        &:hover,
+        &:focus {
+          background: #eff6ff;
+        }
+      }
+    }
+  }
+
+  input[type='number'] {
+    width: 90px;
+    padding: 0.35rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    text-align: right;
+    font: inherit;
+  }
+
+  .acciones {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+}
+
+.filtros {
+  margin: 1rem 0;
+
+  select {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font: inherit;
+  }
+}
+
+.paginacion {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.detalle-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resumen {
+  color: #374151;
+  font-size: 0.9rem;
+  margin: 0.25rem 0 1rem;
+}
+
+.vacio {
+  color: #6b7280;
+}
