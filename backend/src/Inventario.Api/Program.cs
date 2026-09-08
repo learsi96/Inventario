@@ -104,6 +104,7 @@ app.MapExistenciasEndpoints();
 app.MapMovimientosEndpoints();
 app.MapTransferenciasEndpoints();
 app.MapConteosEndpoints();
+app.MapReportesEndpoints();
 
 if (app.Environment.IsDevelopment())
 {

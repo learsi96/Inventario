@@ -4,6 +4,7 @@ using Inventario.Application.Existencias;
 using Inventario.Application.Identidad;
 using Inventario.Application.Movimientos;
 using Inventario.Application.Partners;
+using Inventario.Application.Reportes;
 using Inventario.Application.Sucursales;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,6 +30,7 @@ public static class DependencyInjection
         services.AddScoped<MovimientosService>();
         services.AddScoped<TransferenciasService>();
         services.AddScoped<ConteosService>();
+        services.AddScoped<ReportesService>();
         return services;
     }
 }

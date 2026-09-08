@@ -2,6 +2,7 @@ using Inventario.Application.Abstractions;
 using Inventario.Infrastructure.Archivos;
 using Inventario.Infrastructure.Identidad;
 using Inventario.Infrastructure.Persistence;
+using Inventario.Infrastructure.Reportes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +36,8 @@ public static class DependencyInjection
 
         services.AddOptions<ArchivosOptions>().Bind(configuration.GetSection(ArchivosOptions.Seccion));
         services.AddSingleton<IAlmacenArchivos, AlmacenArchivosLocal>();
+
+        services.AddSingleton<IGeneradorReporte, GeneradorReporte>();
 
         services.AddOptions<JwtOptions>()
             .Bind(configuration.GetSection(JwtOptions.Seccion))

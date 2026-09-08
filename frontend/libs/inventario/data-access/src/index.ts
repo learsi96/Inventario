@@ -16,3 +16,5 @@ export type {
 } from './lib/movimientos.service';
 export { TransferenciasService } from './lib/transferencias.service';
 export { ConteosService } from './lib/conteos.service';
+export { ReportesService } from './lib/reportes.service';
+export type { FormatoReporte } from './lib/reportes.service';

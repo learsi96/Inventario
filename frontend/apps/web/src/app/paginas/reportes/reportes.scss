@@ -1,0 +1,98 @@
+.reportes {
+  max-width: 800px;
+
+  h1 {
+    margin: 0 0 1rem;
+  }
+}
+
+.tarjeta {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  .ayuda {
+    margin: 0 0 0.75rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+
+  .fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: end;
+    margin-bottom: 1rem;
+  }
+
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    color: #374151;
+
+    &.check {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    &.buscar {
+      position: relative;
+      min-width: 260px;
+    }
+
+    input:not([type='checkbox']),
+    select {
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font: inherit;
+    }
+
+    .resultados {
+      list-style: none;
+      margin: 0.25rem 0 0;
+      padding: 0;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      z-index: 10;
+      max-height: 180px;
+      overflow-y: auto;
+
+      li button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 0.45rem 0.75rem;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+
+        &:hover,
+        &:focus {
+          background: #eff6ff;
+        }
+      }
+    }
+  }
+
+  .botones {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
