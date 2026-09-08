@@ -1,4 +1,5 @@
 using Inventario.Application.Catalogo;
+using Inventario.Application.Conteos;
 using Inventario.Application.Existencias;
 using Inventario.Application.Identidad;
 using Inventario.Application.Movimientos;
@@ -27,6 +28,7 @@ public static class DependencyInjection
         services.AddScoped<FoliosService>();
         services.AddScoped<MovimientosService>();
         services.AddScoped<TransferenciasService>();
+        services.AddScoped<ConteosService>();
         return services;
     }
 }

@@ -347,6 +347,49 @@ export interface Transferencia {
   readonly renglones: readonly RenglonTransferencia[];
 }
 
+// ---- Conteos físicos (Hito 6) ----
+
+export type EstadoConteo = 'EnProgreso' | 'Conciliado' | 'Cancelado';
+
+export interface ConteoDetalle {
+  readonly articuloId: string;
+  readonly articuloSku: string;
+  readonly articuloNombre: string;
+  readonly cantidadSistema: number;
+  readonly cantidadContada: number | null;
+  readonly diferencia: number;
+}
+
+export interface ConteoLista {
+  readonly id: string;
+  readonly folio: number;
+  readonly estado: EstadoConteo;
+  readonly sucursalNombre: string;
+  readonly categoriaNombre: string | null;
+  readonly creadoEn: string;
+  readonly usuarioNombre: string;
+  readonly articulos: number;
+  readonly contados: number;
+}
+
+export interface Conteo {
+  readonly id: string;
+  readonly folio: number;
+  readonly estado: EstadoConteo;
+  readonly sucursalId: string;
+  readonly sucursalNombre: string;
+  readonly categoriaId: string | null;
+  readonly categoriaNombre: string | null;
+  readonly creadoEn: string;
+  readonly conciliadoEn: string | null;
+  readonly usuarioNombre: string;
+  readonly movimientoAjusteId: string | null;
+  readonly contados: number;
+  readonly conDiferencia: number;
+  readonly diferenciaNeta: number;
+  readonly detalles: readonly ConteoDetalle[];
+}
+
 export interface ResultadoPaginado<T> {
   readonly items: readonly T[];
   readonly total: number;
