@@ -15,7 +15,7 @@ Alcance detallado y fuera de alcance: ver [PRD.md](PRD.md).
 | **5 — Transferencias** | Entre sucursales con estados solicitada → en tránsito → recibida; costo de origen; recepción parcial (diferencias visibles enviado/recibido); cancelación con devolución al origen. Pantalla de transferencias. | Hecho. Verificado contra SQL: envío descuenta origen, recepción de 3 de 4 (1 perdida), cancelación en tránsito devuelve. |
 | **6 — Conteos físicos** | Conteo por sucursal (opcionalmente por categoría); fotografía las existencias al iniciar; captura incremental; conciliación que ajusta a lo contado y genera el movimiento; cancelación. Un solo conteo en progreso por sucursal. Pantalla de conteos con captura y diferencias. | Hecho. Verificado contra SQL: iniciar/capturar/conciliar ajusta la existencia (10→7), sin diferencias no genera movimiento, doble conteo → 409. |
 | **7 — App móvil** | Añadir Ionic + Capacitor a `apps/mobile`. Consulta de existencias, escaneo de código de barras, transferencias y conteos desde el piso. Solo online. | Pendiente |
-| **8 — Reportes** | Existencias, valorización, kardex, diferencias de conteo. Exportar a Excel/PDF. | Pendiente |
+| **8 — Reportes** | Existencias, valorización, kardex y diferencias de conteo, exportables a Excel (ClosedXML) y PDF (QuestPDF Community). Pantalla /reportes con filtros y descarga. Los datos ya venían de los hitos 3/4/6. | Hecho. Verificado contra SQL: los 4 reportes generan xlsx y pdf válidos. |
 | **9 — Despliegue** | Bicep del entorno de pruebas, pipelines de CD, migración local → Azure, validación con el cliente. | Pendiente |
 
 ## Después del MVP1

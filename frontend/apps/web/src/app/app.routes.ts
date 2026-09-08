@@ -70,6 +70,11 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
           import('./paginas/conteos/conteos').then((m) => m.ConteosPage),
       },
+      {
+        path: 'reportes',
+        loadComponent: () =>
+          import('./paginas/reportes/reportes').then((m) => m.ReportesPage),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

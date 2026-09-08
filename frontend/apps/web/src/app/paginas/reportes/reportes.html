@@ -1,0 +1,152 @@
+<section class="reportes">
+  <h1>Reportes</h1>
+
+  @if (error(); as e) {
+  <p class="error-msg">{{ e }}</p>
+  }
+
+  <div class="tarjeta">
+    <h2>Existencias</h2>
+    <div class="fila">
+      <label class="campo">
+        Sucursal
+        <select [ngModel]="sucursal()" (ngModelChange)="sucursal.set($event)">
+          <option value="">Todas</option>
+          @for (s of sucursales(); track s.id) {
+          <option [value]="s.id">{{ s.nombre }}</option>
+          }
+        </select>
+      </label>
+      <label class="campo">
+        Categoría
+        <select [ngModel]="categoria()" (ngModelChange)="categoria.set($event)">
+          <option value="">Todas</option>
+          @for (c of categorias(); track c.id) {
+          <option [value]="c.id">{{ c.etiqueta }}</option>
+          }
+        </select>
+      </label>
+      <label class="campo check">
+        <input
+          type="checkbox"
+          [ngModel]="soloBajoMinimo()"
+          (ngModelChange)="soloBajoMinimo.set($event)"
+        />
+        Solo bajo mínimo
+      </label>
+    </div>
+    <div class="botones">
+      <button type="button" class="btn" (click)="existencias('xlsx')">
+        Excel
+      </button>
+      <button type="button" class="btn" (click)="existencias('pdf')">
+        PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="tarjeta">
+    <h2>Valorización del inventario</h2>
+    <p class="ayuda">Usa la sucursal seleccionada arriba (o todas).</p>
+    <div class="botones">
+      <button type="button" class="btn" (click)="valorizacion('xlsx')">
+        Excel
+      </button>
+      <button type="button" class="btn" (click)="valorizacion('pdf')">
+        PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="tarjeta">
+    <h2>Kardex de un artículo</h2>
+    <div class="fila">
+      <label class="campo buscar">
+        Artículo
+        <input
+          type="text"
+          [ngModel]="busqueda()"
+          (ngModelChange)="busqueda.set($event)"
+          (input)="buscarArticulo()"
+          placeholder="SKU o nombre…"
+        />
+        @if (resultadosBusqueda().length > 0) {
+        <ul class="resultados">
+          @for (a of resultadosBusqueda(); track a.id) {
+          <li>
+            <button type="button" (click)="elegirArticulo(a)">
+              {{ a.sku }} — {{ a.nombre }}
+            </button>
+          </li>
+          }
+        </ul>
+        }
+      </label>
+      <label class="campo">
+        Sucursal
+        <select
+          [ngModel]="kardexSucursal()"
+          (ngModelChange)="kardexSucursal.set($event)"
+        >
+          <option value="">Todas</option>
+          @for (s of sucursales(); track s.id) {
+          <option [value]="s.id">{{ s.nombre }}</option>
+          }
+        </select>
+      </label>
+    </div>
+    <div class="botones">
+      <button
+        type="button"
+        class="btn"
+        [disabled]="!articulo()"
+        (click)="kardex('xlsx')"
+      >
+        Excel
+      </button>
+      <button
+        type="button"
+        class="btn"
+        [disabled]="!articulo()"
+        (click)="kardex('pdf')"
+      >
+        PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="tarjeta">
+    <h2>Diferencias de conteo</h2>
+    <div class="fila">
+      <label class="campo">
+        Conteo conciliado
+        <select [ngModel]="conteoId()" (ngModelChange)="conteoId.set($event)">
+          <option value="">Selecciona…</option>
+          @for (c of conteos(); track c.id) {
+          <option [value]="c.id">
+            #{{ c.folio }} — {{ c.sucursalNombre }}
+          </option>
+          }
+        </select>
+      </label>
+    </div>
+    <div class="botones">
+      <button
+        type="button"
+        class="btn"
+        [disabled]="!conteoId()"
+        (click)="diferencias('xlsx')"
+      >
+        Excel
+      </button>
+      <button
+        type="button"
+        class="btn"
+        [disabled]="!conteoId()"
+        (click)="diferencias('pdf')"
+      >
+        PDF
+      </button>
+    </div>
+  </div>
+</section>
