@@ -1,28 +1,99 @@
-<div class="layout">
-  <header>
-    <span class="marca">Inventario</span>
-    <nav>
-      <a routerLink="/articulos" routerLinkActive="activo">Artículos</a>
-      <a routerLink="/existencias" routerLinkActive="activo">Existencias</a>
-      <a routerLink="/movimientos" routerLinkActive="activo">Movimientos</a>
-      <a routerLink="/transferencias" routerLinkActive="activo"
-        >Transferencias</a
-      >
-      <a routerLink="/categorias" routerLinkActive="activo">Categorías</a>
-      <a routerLink="/ubicaciones" routerLinkActive="activo">Ubicaciones</a>
-      <a routerLink="/sucursales" routerLinkActive="activo">Sucursales</a>
-      @if (esAdmin()) {
-      <a routerLink="/usuarios" routerLinkActive="activo">Usuarios</a>
+<div class="layout" [class.menu-abierto]="menuAbierto()">
+  <aside class="barra">
+    <div class="marca">
+      <span class="logo">IN</span>
+      <span class="nombre">Inventario</span>
+    </div>
+
+    <nav class="nav">
+      @for (grupo of gruposVisibles(); track grupo.titulo) {
+      <div class="grupo">
+        <span class="grupo-titulo">{{ grupo.titulo }}</span>
+        @for (e of grupo.enlaces; track e.ruta) {
+        <a
+          [routerLink]="e.ruta"
+          routerLinkActive="activo"
+          (click)="menuAbierto.set(false)"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path [attr.d]="iconos[e.icono]" />
+          </svg>
+          {{ e.texto }}
+        </a>
+        }
+      </div>
       }
     </nav>
-    <span class="spacer"></span>
-    @if (usuario(); as u) {
-    <span class="usuario">{{ u.nombreCompleto }} · {{ u.rol }}</span>
-    }
-    <button type="button" (click)="salir()">Salir</button>
-  </header>
 
-  <main>
-    <router-outlet></router-outlet>
-  </main>
+    @if (usuario(); as u) {
+    <div class="usuario">
+      <div class="avatar">{{ u.nombreCompleto.charAt(0) }}</div>
+      <div class="datos">
+        <span class="u-nombre">{{ u.nombreCompleto }}</span>
+        <span class="u-rol">{{ u.rol }}</span>
+      </div>
+      <button
+        type="button"
+        class="salir"
+        title="Cerrar sesión"
+        (click)="salir()"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"
+          />
+        </svg>
+      </button>
+    </div>
+    }
+  </aside>
+
+  <div class="contenido">
+    <header class="topbar">
+      <button
+        type="button"
+        class="menu-btn"
+        (click)="alternarMenu()"
+        aria-label="Menú"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <path d="M3 12h18M3 6h18M3 18h18" />
+        </svg>
+      </button>
+      <span class="topbar-marca">Inventario</span>
+    </header>
+
+    <main class="area">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  @if (menuAbierto()) {
+  <button
+    type="button"
+    class="overlay"
+    aria-label="Cerrar menú"
+    (click)="menuAbierto.set(false)"
+  ></button>
+  }
 </div>

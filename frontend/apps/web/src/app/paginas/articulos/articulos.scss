@@ -1,210 +1,94 @@
 .articulos {
-  max-width: 1100px;
-}
-
-.encabezado {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  h1 {
-    margin: 0;
-  }
-}
-
-.error {
-  color: #b91c1c;
-}
-
-button {
-  padding: 0.4rem 0.75rem;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  background: #f9fafb;
-  cursor: pointer;
-
-  &.primario {
-    background: #2563eb;
-    border-color: #2563eb;
-    color: #fff;
-    font-weight: 600;
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: default;
-  }
+  max-width: 1150px;
 }
 
 .formulario {
-  margin: 1rem 0 1.5rem;
-  padding: 1.25rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: #fff;
+  margin: 0 0 var(--sp-5);
+  padding: var(--sp-5);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 
   h2 {
-    margin: 0 0 1rem;
-    font-size: 1rem;
+    margin: 0 0 var(--sp-4);
   }
 
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
+    gap: var(--sp-4);
   }
 
   label {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
-    font-size: 0.8rem;
-    color: #374151;
+    gap: var(--sp-1);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--c-text-muted);
 
     &.ancho {
       grid-column: 1 / -1;
     }
   }
 
-  input,
-  select,
-  textarea {
-    padding: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    font: inherit;
-  }
-
-  .imagen {
-    margin-top: 1.25rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    padding: 0.75rem 1rem 1rem;
+  fieldset {
+    margin-top: var(--sp-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    padding: var(--sp-3) var(--sp-4) var(--sp-4);
 
     legend {
-      font-size: 0.8rem;
-      color: #374151;
-      padding: 0 0.35rem;
-    }
-
-    img {
-      display: block;
-      max-width: 160px;
-      max-height: 160px;
-      border: 1px solid #e5e7eb;
-      border-radius: 4px;
-      margin-bottom: 0.5rem;
-    }
-
-    .archivo {
-      display: block;
-      font-size: 0.8rem;
-      color: #374151;
-      margin-top: 0.5rem;
-    }
-
-    .pista {
-      margin: 0;
-      font-size: 0.8rem;
-      color: #6b7280;
+      font-size: var(--fs-sm);
+      color: var(--c-text-muted);
+      padding: 0 var(--sp-1);
     }
   }
 
-  .alternos {
-    margin-top: 1.25rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    padding: 0.75rem 1rem 1rem;
+  .imagen img {
+    display: block;
+    max-width: 160px;
+    max-height: 160px;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    margin-bottom: var(--sp-2);
+  }
 
-    legend {
-      font-size: 0.8rem;
-      color: #374151;
-      padding: 0 0.35rem;
-    }
+  .imagen .archivo,
+  .imagen .pista {
+    display: block;
+    font-size: var(--fs-sm);
+    color: var(--c-text-muted);
+    margin-top: var(--sp-2);
+  }
 
-    .alterno-fila {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
+  .alterno-fila {
+    display: flex;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-2);
 
-      input {
-        flex: 1;
-      }
+    input {
+      flex: 1;
     }
   }
 
   .acciones {
-    margin-top: 1.25rem;
+    margin-top: var(--sp-4);
     display: flex;
-    gap: 0.5rem;
+    gap: var(--sp-2);
   }
 }
 
-.filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-
-  input[type='search'] {
-    flex: 1;
-    min-width: 260px;
-    padding: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    font: inherit;
-  }
-
-  select {
-    padding: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    font: inherit;
-  }
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-
-  th,
-  td {
-    text-align: left;
-    padding: 0.55rem 0.75rem;
-    border-bottom: 1px solid #e5e7eb;
-  }
-
-  th {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: #6b7280;
-  }
-
-  .num {
-    text-align: right;
-  }
-
-  tr.descontinuado td {
-    color: #9ca3af;
-  }
-}
-
-.fila-acciones {
-  display: flex;
-  gap: 0.4rem;
+.filtros input[type='search'] {
+  min-width: 260px;
 }
 
 .paginacion {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  font-size: 0.85rem;
-  color: #374151;
-}
-
-.vacio {
-  color: #6b7280;
+  gap: var(--sp-4);
+  margin-top: var(--sp-4);
+  font-size: var(--fs-sm);
+  color: var(--c-text-muted);
 }

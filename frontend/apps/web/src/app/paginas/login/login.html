@@ -1,7 +1,10 @@
 <div class="login">
   <form [formGroup]="form" (ngSubmit)="enviar()">
-    <h1>Inventario</h1>
-    <p class="subtitulo">Inicia sesión</p>
+    <div class="marca">
+      <span class="logo">IN</span>
+      <h1>Inventario</h1>
+    </div>
+    <p class="subtitulo">Inicia sesión para continuar</p>
 
     <label>
       Email
@@ -21,7 +24,11 @@
     <p class="error">{{ e }}</p>
     }
 
-    <button type="submit" [disabled]="form.invalid || cargando()">
+    <button
+      type="submit"
+      class="btn primario"
+      [disabled]="form.invalid || cargando()"
+    >
       {{ cargando() ? 'Entrando…' : 'Entrar' }}
     </button>
 
