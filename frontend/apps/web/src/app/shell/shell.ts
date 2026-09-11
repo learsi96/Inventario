@@ -57,30 +57,30 @@ export class Shell {
     {
       titulo: 'Catálogo',
       enlaces: [
-        { ruta: '/articulos', texto: 'Artículos', icono: 'box' },
-        { ruta: '/categorias', texto: 'Categorías', icono: 'tag' },
+        { ruta: 'articulos', texto: 'Artículos', icono: 'box' },
+        { ruta: 'categorias', texto: 'Categorías', icono: 'tag' },
       ],
     },
     {
       titulo: 'Inventario',
       enlaces: [
-        { ruta: '/existencias', texto: 'Existencias', icono: 'layers' },
-        { ruta: '/movimientos', texto: 'Movimientos', icono: 'swap' },
-        { ruta: '/transferencias', texto: 'Transferencias', icono: 'truck' },
-        { ruta: '/conteos', texto: 'Conteos', icono: 'check' },
+        { ruta: 'existencias', texto: 'Existencias', icono: 'layers' },
+        { ruta: 'movimientos', texto: 'Movimientos', icono: 'swap' },
+        { ruta: 'transferencias', texto: 'Transferencias', icono: 'truck' },
+        { ruta: 'conteos', texto: 'Conteos', icono: 'check' },
       ],
     },
     {
       titulo: 'Análisis',
-      enlaces: [{ ruta: '/reportes', texto: 'Reportes', icono: 'chart' }],
+      enlaces: [{ ruta: 'reportes', texto: 'Reportes', icono: 'chart' }],
     },
     {
       titulo: 'Configuración',
       enlaces: [
-        { ruta: '/sucursales', texto: 'Sucursales', icono: 'store' },
-        { ruta: '/ubicaciones', texto: 'Ubicaciones', icono: 'pin' },
+        { ruta: 'sucursales', texto: 'Sucursales', icono: 'store' },
+        { ruta: 'ubicaciones', texto: 'Ubicaciones', icono: 'pin' },
         {
-          ruta: '/usuarios',
+          ruta: 'usuarios',
           texto: 'Usuarios',
           icono: 'users',
           soloAdmin: true,

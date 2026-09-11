@@ -1,37 +1,53 @@
 <div class="login">
-  <form [formGroup]="form" (ngSubmit)="enviar()">
-    <div class="marca">
+  <div class="panel-marca">
+    <a routerLink="/" class="marca">
       <span class="logo">IN</span>
-      <h1>Inventario</h1>
-    </div>
-    <p class="subtitulo">Inicia sesión para continuar</p>
+      <span class="nombre">Inventario</span>
+    </a>
+    <h1>Control de inventario para refaccionarias multi-sucursal</h1>
+    <p>
+      Existencias, movimientos, transferencias y conteos de todas tus
+      sucursales en un solo lugar.
+    </p>
+    <ul class="puntos">
+      <li>Costeo promedio ponderado automático</li>
+      <li>Kardex completo por artículo</li>
+      <li>Roles y permisos por usuario</li>
+    </ul>
+  </div>
 
-    <label>
-      Email
-      <input type="email" formControlName="email" autocomplete="username" />
-    </label>
+  <div class="panel-form">
+    <form [formGroup]="form" (ngSubmit)="enviar()">
+      <h2>Inicia sesión</h2>
+      <p class="subtitulo">Accede con las credenciales de tu partner</p>
 
-    <label>
-      Contraseña
-      <input
-        type="password"
-        formControlName="contrasena"
-        autocomplete="current-password"
-      />
-    </label>
+      <label>
+        Email
+        <input type="email" formControlName="email" autocomplete="username" />
+      </label>
 
-    @if (error(); as e) {
-    <p class="error">{{ e }}</p>
-    }
+      <label>
+        Contraseña
+        <input
+          type="password"
+          formControlName="contrasena"
+          autocomplete="current-password"
+        />
+      </label>
 
-    <button
-      type="submit"
-      class="btn primario"
-      [disabled]="form.invalid || cargando()"
-    >
-      {{ cargando() ? 'Entrando…' : 'Entrar' }}
-    </button>
+      @if (error(); as e) {
+      <p class="error">{{ e }}</p>
+      }
 
-    <p class="pista">Demo: admin&#64;demo.com / Demo1234!</p>
-  </form>
+      <button
+        type="submit"
+        class="btn primario"
+        [disabled]="form.invalid || cargando()"
+      >
+        {{ cargando() ? 'Entrando…' : 'Entrar' }}
+      </button>
+
+      <p class="pista">Demo: admin&#64;demo.com / Demo1234!</p>
+    </form>
+  </div>
 </div>

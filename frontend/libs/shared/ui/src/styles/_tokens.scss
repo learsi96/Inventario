@@ -1,0 +1,78 @@
+/* =========================================================================
+   Tokens de diseño compartidos — web y (más adelante) móvil.
+   Extraídos de apps/web en la Fase D para reutilizarlos en el Hito 7 (Ionic).
+   ========================================================================= */
+
+:root {
+  /* Marca / acento */
+  --c-primary: #2563eb;
+  --c-primary-hover: #1d4ed8;
+  --c-primary-soft: #eff4ff;
+  --c-primary-border: #bfd3ff;
+
+  /* Acento dorado (uso puntual: CTA de landing, detalle activo del sidebar) */
+  --c-accent: #ca8a04;
+  --c-accent-hover: #a16207;
+  --c-accent-soft: #fef9c3;
+  --c-accent-text: #713f12;
+
+  /* Neutros (slate) */
+  --c-text: #0f172a;
+  --c-text-muted: #64748b;
+  --c-text-subtle: #94a3b8;
+  --c-border: #e2e8f0;
+  --c-border-strong: #cbd5e1;
+  --c-surface: #ffffff;
+  --c-surface-2: #f8fafc;
+  --c-app-bg: #f1f5f9;
+
+  /* Barra lateral (oscura) */
+  --c-side-bg: #0f172a;
+  --c-side-bg-2: #1e293b;
+  --c-side-text: #cbd5e1;
+  --c-side-text-active: #ffffff;
+  --c-side-border: #1e293b;
+
+  /* Semánticos */
+  --c-success: #15803d;
+  --c-success-soft: #dcfce7;
+  --c-warning: #b45309;
+  --c-warning-soft: #fef3c7;
+  --c-danger: #b91c1c;
+  --c-danger-soft: #fee2e2;
+
+  /* Tipografía */
+  --font:
+    system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: 1.75rem;
+  --fs-3xl: 2.5rem;
+
+  /* Espaciado */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4.5rem;
+
+  /* Formas */
+  --radius: 6px;
+  --radius-lg: 10px;
+  --radius-pill: 999px;
+
+  /* Sombras */
+  --shadow-sm:
+    0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.16);
+
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.28);
+}

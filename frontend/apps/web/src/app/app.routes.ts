@@ -3,12 +3,18 @@ import { authGuard } from '@inventario/shared-auth';
 
 export const appRoutes: Route[] = [
   {
+    path: '',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import('./paginas/landing/landing').then((m) => m.LandingPage),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./paginas/login/login').then((m) => m.LoginPage),
   },
   {
-    path: '',
+    path: 'app',
     loadComponent: () => import('./shell/shell').then((m) => m.Shell),
     canActivate: [authGuard],
     children: [
