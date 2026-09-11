@@ -1,11 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@inventario/shared-auth';
 
 @Component({
   selector: 'inv-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -31,7 +31,7 @@ export class LoginPage {
     const { email, contrasena } = this.form.getRawValue();
     try {
       await this.auth.login(email, contrasena);
-      await this.router.navigate(['/']);
+      await this.router.navigate(['/app']);
     } catch {
       this.error.set('Credenciales inválidas o servidor no disponible.');
     } finally {

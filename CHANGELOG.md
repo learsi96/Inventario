@@ -58,3 +58,12 @@ y el proyecto se adhiere a [Versionado Semántico](https://semver.org/lang/es/).
   diferencias de conteo, exportables a Excel (ClosedXML) y PDF (QuestPDF
   Community). Pantalla `/reportes` con filtros y descarga autenticada (blob +
   object URL). Los datos ya venían de los hitos 3/4/6.
+- **Fase D — Landing pública y rediseño de login**: nueva página pública en
+  `/` (hero, propuesta de valor, características, módulos, "cómo está
+  construido" y CTA a login), inspirada en patrones de landings SaaS pero con
+  contenido propio y sin cifras/testimonios inventados. El área autenticada
+  se movió de `/` a `/app` (rutas internas sin cambios relativos). Login
+  rediseñado a dos columnas (panel de marca + formulario). Tokens de diseño
+  (`:root`) extraídos de `apps/web` a `libs/shared/ui` para reutilizarse en
+  el Hito 7 (móvil); nuevo acento dorado (`--c-accent`) usado con moderación
+  en CTAs de landing y el enlace activo del sidebar.

@@ -1,33 +1,37 @@
+:host {
+  display: block;
+}
+
 .login {
   min-height: 100vh;
   display: grid;
-  place-items: center;
-  padding: var(--sp-4);
-  background:
-    radial-gradient(
-      1200px 600px at 100% 0%,
-      rgba(37, 99, 235, 0.08),
-      transparent 60%
-    ),
-    var(--c-app-bg);
+  grid-template-columns: 1.1fr 1fr;
+  background: var(--c-app-bg);
 }
 
-form {
-  width: min(380px, 100%);
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 2rem;
+/* ---- Panel de marca (izquierda) --------------------------------------- */
+
+.panel-marca {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: center;
+  gap: var(--sp-4);
+  padding: var(--sp-7) var(--sp-6);
+  color: #fff;
+  background:
+    radial-gradient(
+      900px 500px at 15% 10%,
+      rgba(202, 138, 4, 0.25),
+      transparent 55%
+    ),
+    linear-gradient(160deg, var(--c-side-bg) 0%, var(--c-side-bg-2) 100%);
 
   .marca {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    margin-bottom: 0.5rem;
+    text-decoration: none;
+    margin-bottom: var(--sp-3);
 
     .logo {
       display: grid;
@@ -41,9 +45,70 @@ form {
       font-size: 0.8rem;
     }
 
-    h1 {
-      font-size: var(--fs-lg);
+    .nombre {
+      color: #fff;
+      font-weight: 650;
+      font-size: var(--fs-md);
     }
+  }
+
+  h1 {
+    font-size: var(--fs-2xl);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    max-width: 26ch;
+  }
+
+  p {
+    margin: 0;
+    color: var(--c-side-text);
+    max-width: 42ch;
+    line-height: 1.55;
+  }
+
+  .puntos {
+    list-style: none;
+    margin: var(--sp-2) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    color: var(--c-side-text);
+    font-size: var(--fs-sm);
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+
+      &::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--c-accent);
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+
+/* ---- Panel de formulario (derecha) ------------------------------------ */
+
+.panel-form {
+  display: grid;
+  place-items: center;
+  padding: var(--sp-4);
+}
+
+form {
+  width: min(360px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h2 {
+    font-size: var(--fs-xl);
   }
 
   .subtitulo {
@@ -79,5 +144,25 @@ form {
     font-size: var(--fs-xs);
     color: var(--c-text-subtle);
     text-align: center;
+  }
+}
+
+/* ---- Responsivo -------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .login {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-marca {
+    padding: var(--sp-6) var(--sp-4);
+
+    h1 {
+      font-size: var(--fs-xl);
+    }
+
+    .puntos {
+      display: none;
+    }
   }
 }

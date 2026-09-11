@@ -1,0 +1,157 @@
+<div class="landing">
+  <header class="encabezado-pub">
+    <a routerLink="/" class="marca">
+      <span class="logo">IN</span>
+      <span class="nombre">Inventario</span>
+    </a>
+    <a routerLink="/login" class="btn primario">Iniciar sesión</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-texto">
+      <h1>
+        Control de inventario para refaccionarias con múltiples sucursales
+      </h1>
+      <p>
+        Existencias, movimientos, transferencias y conteos de todas tus
+        sucursales, en un solo sistema multi-partner: cada refaccionaria con
+        sus propios datos, aislados desde el diseño.
+      </p>
+      <a routerLink="/login" class="btn primario btn--lg">Iniciar sesión</a>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="mock-kardex">
+        <div class="mock-fila mock-encabezado">
+          <span>Folio</span><span>Movimiento</span><span>Existencia</span
+          ><span>Costo</span>
+        </div>
+        <div class="mock-fila">
+          <span>0142</span><span>Entrada</span><span>86</span
+          ><span>$412.30</span>
+        </div>
+        <div class="mock-fila">
+          <span>0143</span><span>Transferencia</span><span>52</span
+          ><span>$412.30</span>
+        </div>
+        <div class="mock-fila mock-acento">
+          <span>0144</span><span>Salida</span><span>48</span
+          ><span>$412.30</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="valores">
+    @for (v of valores; track v.titulo) {
+    <div class="valor">
+      <h3>{{ v.titulo }}</h3>
+      <p>{{ v.descripcion }}</p>
+    </div>
+    }
+  </section>
+
+  <section class="seccion">
+    <div class="seccion-titulo">
+      <h2>Todo lo que necesita el piso de ventas y el almacén</h2>
+      <p>Pensado para operación multi-sucursal desde el primer día.</p>
+    </div>
+
+    <div class="caracteristicas">
+      @for (c of caracteristicas; track c.titulo) {
+      <div class="caracteristica">
+        <span class="icono-chip">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            @switch (c.icono) { @case ('layers') {
+            <path d="M12 2l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 17l9 5 9-5" />
+            } @case ('chart') {
+            <path d="M3 3v18h18M7 14v4M12 9v9M17 5v13" />
+            } @case ('swap') {
+            <path d="M7 10l-4 4 4 4M3 14h13M17 14l4-4-4-4M21 10H8" />
+            } @case ('truck') {
+            <path
+              d="M1 3h15v13H1zM16 8h4l3 3v5h-7M5.5 20a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM18.5 20a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
+            />
+            } @case ('check') {
+            <path
+              d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+            />
+            } @case ('box') {
+            <path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8" />
+            } }
+          </svg>
+        </span>
+        <h3>{{ c.titulo }}</h3>
+        <p>{{ c.descripcion }}</p>
+      </div>
+      }
+    </div>
+  </section>
+
+  <section class="seccion seccion-alt">
+    <div class="seccion-titulo">
+      <h2>Cómo funciona</h2>
+      <p>Los mismos módulos que usa tu equipo, de punta a punta.</p>
+    </div>
+
+    <div class="modulos">
+      @for (m of modulos; track m.numero) {
+      <div class="modulo">
+        <span class="modulo-num">{{ m.numero }}</span>
+        <h3>{{ m.titulo }}</h3>
+        <p>{{ m.descripcion }}</p>
+      </div>
+      }
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="seccion-titulo">
+      <h2>Cómo está construido</h2>
+      <p>Decisiones de arquitectura pensadas para negocios reales.</p>
+    </div>
+
+    <div class="confianza">
+      <div class="confianza-item">
+        <h3>Multi-tenant real</h3>
+        <p>Los datos de cada partner están aislados a nivel de base de datos.</p>
+      </div>
+      <div class="confianza-item">
+        <h3>Autenticación con roles</h3>
+        <p>
+          Acceso por sesión con permisos según el rol y las sucursales de
+          cada usuario.
+        </p>
+      </div>
+      <div class="confianza-item">
+        <h3>Historial auditable</h3>
+        <p>Todo movimiento de inventario queda registrado en el kardex.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <h2>Entra a tu inventario</h2>
+    <p>Accede con las credenciales de tu partner para continuar.</p>
+    <a routerLink="/login" class="btn accent btn--lg">Iniciar sesión</a>
+  </section>
+
+  <footer class="pie-pub">
+    <div class="marca">
+      <span class="logo">IN</span>
+      <span class="nombre">Inventario</span>
+    </div>
+    <p class="tagline">
+      Sistema de inventario multi-partner para refaccionarias.
+    </p>
+    <a routerLink="/login">Iniciar sesión</a>
+    <p class="copyright">© {{ anio }} Inventario.</p>
+  </footer>
+</div>
