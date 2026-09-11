@@ -13,11 +13,14 @@ Documento maestro: **[docs/PRD.md](docs/PRD.md)**. Plan y estado por hito:
 **[docs/roadmap.md](docs/roadmap.md)**. Decisiones técnicas (ADRs):
 **[docs/decisions/](docs/decisions/)**. Historial: **[CHANGELOG.md](CHANGELOG.md)**.
 
-## Estado (2026-09-08)
+## Estado (2026-09-11)
 
 **Backend del MVP1 funcionalmente completo.** Hitos **0, 1, 2, U, 3, 4, 5, 6, 8**
-y la **base de diseño (Fase D)** están en `main`. 36 pruebas backend + 8 proyectos
-frontend en verde.
+y la **Fase D** (base de diseño + landing pública + rediseño de login) están en
+`main`. 36 pruebas backend + 8 proyectos frontend en verde. Landing pública en
+`/`, login de dos columnas, área autenticada en `/app`; tokens de diseño
+compartidos en `libs/shared/ui` para el futuro móvil. Flujo login → shell
+verificado en vivo contra Docker + backend + frontend reales.
 
 Pendiente: **ajuste de diseño desde Figma**, **Hito 7 (app móvil)**,
 **Hito 9 (despliegue a Azure)**, e importación masiva de catálogo (MVP2).

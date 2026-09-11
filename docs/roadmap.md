@@ -3,14 +3,16 @@
 Orden de construcción del MVP1. Cada hito entrega algo demostrable al cliente.
 Alcance detallado y fuera de alcance: ver [PRD.md](PRD.md). Historial: [CHANGELOG.md](../CHANGELOG.md).
 
-## Estado global (2026-09-08)
+## Estado global (2026-09-11)
 
 **Backend del MVP1 funcionalmente completo.** Hecho: **0, 1, 2, U, 3, 4, 5, 6, 8**
-y la **base de diseño (D)**. 36 pruebas backend + 8 proyectos frontend en verde,
-todo en `main` (GitHub `learsi96/Inventario`).
+y la **Fase D** (base de diseño + landing pública + rediseño de login).
+36 pruebas backend + 8 proyectos frontend en verde, todo en `main`
+(GitHub `learsi96/Inventario`). Flujo completo (Docker + backend + frontend)
+verificado en vivo: landing → login → shell autenticado → navegación.
 
 **Próximos pasos (para la siguiente sesión):**
-1. **Ajuste de diseño desde Figma** (segunda parte de la Fase D) — cuando el autor
+1. **Ajuste de diseño desde Figma** (retoque fino de la Fase D) — cuando el autor
    tenga el diseño en Figma y se configure el MCP (requiere plan Dev/Full).
 2. **Hito 7 — App móvil** (Ionic + Capacitor sobre `apps/mobile`, escaneo).
 3. **Hito 9 — Despliegue** a Azure (Bicep, pipelines de CD, migrar la BD).
